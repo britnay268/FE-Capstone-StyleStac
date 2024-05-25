@@ -20,4 +20,18 @@ const getAllHairstyleOccasion = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export default getAllHairstyleOccasion;
+const getSingleHairstyleOccasion = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyle_occasion/${firebaseKey}.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      resolve(data);
+    })
+    .catch(reject);
+});
+
+export { getAllHairstyleOccasion, getSingleHairstyleOccasion };

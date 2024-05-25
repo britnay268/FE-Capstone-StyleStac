@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getHairstylesByUid } from '../api/HairstyleData';
+import { getAllHairstyles } from '../api/HairstyleData';
 import HairstyleCard from '../components/HairstyleCard';
-import { useAuth } from '../utils/context/authContext';
 
 export default function ShowAllHairstlyes() {
   const [hairstyles, setHairstyles] = useState();
 
-  const { user } = useAuth();
-
   const getAllTheHairstyles = () => {
-    getHairstylesByUid(user.uid).then(setHairstyles);
+    getAllHairstyles().then(setHairstyles);
   };
 
   useEffect(() => {
