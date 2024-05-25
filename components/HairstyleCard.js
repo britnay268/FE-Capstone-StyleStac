@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { GrFormView } from 'react-icons/gr';
 import { RiEditLine } from 'react-icons/ri';
 import { MdDeleteForever } from 'react-icons/md';
+import { useRouter } from 'next/router';
 import getAllHairstyleInfo from '../api/mergedData';
 
 export default function HairstyleCard({ hairstyleObj }) {
@@ -16,6 +17,8 @@ export default function HairstyleCard({ hairstyleObj }) {
     getAllHairstyleInfo(firebaseKey).then(setHairstyle);
   }, []);
 
+  const router = useRouter();
+
   return (
     <Card style={{ width: '18rem', margin: '20px 0px' }}>
       <Card.Img variant="top" src={hairstyleObj.image} style={{ height: '300px' }} />
@@ -23,9 +26,14 @@ export default function HairstyleCard({ hairstyleObj }) {
         <Card.Title>{hairstyleObj.name}</Card.Title>
         <p>Type: {hairstyle.type?.name}</p>
         <p>Occasion: {hairstyle.occasion?.name}</p>
+        <p>Created by: {hairstyleObj.uid.name}</p>
         <Button variant="warning"><GrFormView /></Button>
-        <Button variant="success"><RiEditLine /></Button>
-        <Button variant="danger"><MdDeleteForever /></Button>
+        {router.asPath !== '/hairstyles' && (
+          <>
+            <Button variant="success"><RiEditLine /></Button>
+            <Button variant="danger"><MdDeleteForever /></Button>
+          </>
+        )}
       </Card.Body>
     </Card>
   );

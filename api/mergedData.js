@@ -7,7 +7,6 @@ const getAllHairstyleInfo = async (hairstyleFirebaseKey) => {
   const type = await getSingleHairstyleType(hairstyle.type_id);
   const occasion = await getSingleHairstyleOccasion(hairstyle.occasion_id);
 
-  console.warn({ ...hairstyle, type, occasion });
   return { ...hairstyle, type, occasion };
 };
 
