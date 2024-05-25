@@ -8,16 +8,22 @@ import { RiEditLine } from 'react-icons/ri';
 import { MdDeleteForever } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import getAllHairstyleInfo from '../api/mergedData';
+import { deleteHairstyle } from '../api/HairstyleData';
 
-export default function HairstyleCard({ hairstyleObj }) {
+export default function HairstyleCard({ hairstyleObj, onUpdate }) {
   const [hairstyle, setHairstyle] = useState([]);
+  const router = useRouter();
+
+  const deleteTheHairstyle = () => {
+    if (window.confirm(`Delete ${hairstyleObj.name} hairstyle?`)) {
+      deleteHairstyle(hairstyleObj.firebaseKey).then(() => onUpdate());
+    }
+  };
 
   useEffect(() => {
     const { firebaseKey } = hairstyleObj;
     getAllHairstyleInfo(firebaseKey).then(setHairstyle);
   }, []);
-
-  const router = useRouter();
 
   return (
     <Card style={{ width: '18rem', margin: '20px 0px' }}>
@@ -26,12 +32,11 @@ export default function HairstyleCard({ hairstyleObj }) {
         <Card.Title>{hairstyleObj.name}</Card.Title>
         <p>Type: {hairstyle.type?.name}</p>
         <p>Occasion: {hairstyle.occasion?.name}</p>
-        <p>Created by: {hairstyleObj.uid.name}</p>
         <Button variant="warning"><GrFormView /></Button>
         {router.asPath !== '/hairstyles' && (
           <>
             <Button variant="success"><RiEditLine /></Button>
-            <Button variant="danger"><MdDeleteForever /></Button>
+            <Button variant="danger" onClick={deleteTheHairstyle}><MdDeleteForever /></Button>
           </>
         )}
       </Card.Body>
@@ -46,4 +51,5 @@ HairstyleCard.propTypes = {
     uid: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
