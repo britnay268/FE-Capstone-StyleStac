@@ -2,7 +2,7 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const getAllHairstyles = new Promise((resolve, reject) => {
+const getAllHairstyles = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/hairstyles.json`, {
     method: 'GET',
     headers: {
