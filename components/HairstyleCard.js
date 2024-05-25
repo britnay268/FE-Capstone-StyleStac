@@ -1,7 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { GrFormView } from 'react-icons/gr';
+import { RiEditLine } from 'react-icons/ri';
+import { MdDeleteForever } from 'react-icons/md';
 import getAllHairstyleInfo from '../api/mergedData';
 
 export default function HairstyleCard({ hairstyleObj }) {
@@ -19,10 +23,9 @@ export default function HairstyleCard({ hairstyleObj }) {
         <Card.Title>{hairstyleObj.name}</Card.Title>
         <p>Type: {hairstyle.type?.name}</p>
         <p>Occasion: {hairstyle.occasion?.name}</p>
-        <Button variant="info">EDIT</Button>
-        <Button variant="danger" className="m-2">
-          DELETE
-        </Button>
+        <Button variant="warning"><GrFormView /></Button>
+        <Button variant="success"><RiEditLine /></Button>
+        <Button variant="danger"><MdDeleteForever /></Button>
       </Card.Body>
     </Card>
   );
