@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function hairstlyes() {
+export default function ShowHairstlyes() {
   return (
     <div>
       This is the All Hairstyle page.
