@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { getHairstylesByUid } from '../api/HairstyleData';
 import HairstyleCard from '../components/HairstyleCard';

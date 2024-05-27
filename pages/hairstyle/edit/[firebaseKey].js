@@ -1,9 +1,16 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { getSingleHairstyle } from '../../../api/HairstyleData';
+import HairstyleForm from '../../../components/forms/HairstyleForm';
 
 export default function EditHairstyle() {
-  return (
-    <div>
-      This page shows form to edit hairstlye.
-    </div>
-  );
+  const [editHairstyle, setEditHairstyle] = useState({});
+  const router = useRouter();
+  const { firebaseKey } = router.query;
+
+  useEffect(() => {
+    getSingleHairstyle(firebaseKey).then(setEditHairstyle);
+  }, [firebaseKey]);
+
+  return (<HairstyleForm hairstyleObj={editHairstyle} />);
 }

@@ -1,9 +1,10 @@
 import React from 'react';
+import HairstyleForm from '../../components/forms/HairstyleForm';
 
 export default function AddHairstyle() {
   return (
     <div>
-      This shows a form to create a hairstyle.
+      <HairstyleForm />
     </div>
   );
 }
