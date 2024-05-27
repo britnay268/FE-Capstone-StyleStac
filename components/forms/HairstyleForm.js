@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { getAllHairstyleType } from '../../api/HairstyleTypeData';
 import { getAllHairstyleOccasion } from '../../api/HairstyleOccasionData';
+import { createHairstyle, updateHairstyle } from '../../api/HairstyleData';
+import { useAuth } from '../../utils/context/authContext';
 
 const initialValue = {
   name: '',
@@ -15,14 +18,18 @@ export default function HairstyleForm({ hairstyleObj }) {
   const [formInput, setFormInput] = useState(initialValue);
   const [types, setTypes] = useState([]);
   const [occasions, setOccasions] = useState([]);
+  const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
+    // Get all hairstyle types
     getAllHairstyleType().then(setTypes);
 
+    // Get all hairstyle occasions
     getAllHairstyleOccasion().then(setOccasions);
 
     if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
-  }, [hairstyleObj]);
+  }, [hairstyleObj, user]);
 
   // Without this, you will not be able to input values into the input field of the form
   const handleChange = (e) => {
@@ -33,10 +40,22 @@ export default function HairstyleForm({ hairstyleObj }) {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = { ...formInput, uid: user.uid };
+    createHairstyle(payload).then(({ name }) => {
+      const patchPayload = { firebaseKey: name };
+      updateHairstyle(patchPayload).then(() => {
+        router.push('/myhairstyles');
+      });
+    });
+  };
+
   return (
-    <Form>
-      {/* Hairstyle Name Input */}
+    <Form onSubmit={handleSubmit}>
       <h1 className="text-black mt-5 audio">Create Hairstyle</h1>
+
+      {/* Hairstyle Name Input */}
       <Form.Group className="mb-3" controlId="floatingInput1">
         <Form.Label>Hairstyle Name</Form.Label>
         <Form.Control
@@ -66,8 +85,9 @@ export default function HairstyleForm({ hairstyleObj }) {
       <Form.Group className="mb-3" controlId="floatingInput1">
         <Form.Label>Hairstyle Type</Form.Label>
         <Form.Select
-          aria-label="Role"
-          name="type"
+          aria-label="Type"
+          name="type_id"
+          onChange={handleChange}
           className="mb-3"
           value={hairstyleObj.type_id}
           required
@@ -75,7 +95,12 @@ export default function HairstyleForm({ hairstyleObj }) {
           <option value="">Select Hairstyle Type</option>
           {
             types.map((type) => (
-              <option key={type.firebaseKey} value={type.firebaseKey}>{type.name}</option>
+              <option
+                key={type.firebaseKey}
+                value={type.firebaseKey}
+              >
+                {type.name}
+              </option>
             ))
           }
         </Form.Select>
@@ -85,8 +110,9 @@ export default function HairstyleForm({ hairstyleObj }) {
       <Form.Group className="mb-3" controlId="floatingInput1">
         <Form.Label>Hairstyle Occasion</Form.Label>
         <Form.Select
-          aria-label="Role"
-          name="occasion"
+          aria-label="Occasion"
+          name="occasion_id"
+          onChange={handleChange}
           className="mb-3"
           value={hairstyleObj.occasion_id}
           required
@@ -94,7 +120,12 @@ export default function HairstyleForm({ hairstyleObj }) {
           <option value="">Select Hairstyle Occasion</option>
           {
             occasions.map((occasion) => (
-              <option key={occasion.firebaseKey} value={occasion.firebaseKey}>{occasion.name}</option>
+              <option
+                key={occasion.firebaseKey}
+                value={occasion.firebaseKey}
+              >
+                {occasion.name}
+              </option>
             ))
           }
         </Form.Select>
@@ -134,7 +165,6 @@ HairstyleForm.propTypes = {
     image: PropTypes.string,
     durationOfHairstyle: PropTypes.string,
     date_done: PropTypes.string,
-    uid: PropTypes.string,
     firebaseKey: PropTypes.string,
     public: PropTypes.bool,
     favorite: PropTypes.bool,
