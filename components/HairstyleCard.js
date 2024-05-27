@@ -7,6 +7,7 @@ import { GrFormView } from 'react-icons/gr';
 import { RiEditLine } from 'react-icons/ri';
 import { MdDeleteForever } from 'react-icons/md';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import getAllHairstyleInfo from '../api/mergedData';
 import { deleteHairstyle } from '../api/HairstyleData';
 
@@ -35,7 +36,9 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
         <Button variant="warning"><GrFormView /></Button>
         {router.asPath !== '/hairstyles' && (
           <>
-            <Button variant="success"><RiEditLine /></Button>
+            <Link href={`/hairstyle/edit/${hairstyleObj.firebaseKey}`} passHref>
+              <Button variant="success"><RiEditLine /></Button>
+            </Link>
             <Button variant="danger" onClick={deleteTheHairstyle}><MdDeleteForever /></Button>
           </>
         )}

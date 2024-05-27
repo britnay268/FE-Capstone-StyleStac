@@ -7,7 +7,7 @@ import { getAllHairstyleOccasion } from '../../api/HairstyleOccasionData';
 import { createHairstyle, updateHairstyle } from '../../api/HairstyleData';
 import { useAuth } from '../../utils/context/authContext';
 
-const initialValue = {
+const initialState = {
   name: '',
   image: '',
   durationOfHairstyle: '',
@@ -15,7 +15,7 @@ const initialValue = {
 };
 
 export default function HairstyleForm({ hairstyleObj }) {
-  const [formInput, setFormInput] = useState(initialValue);
+  const [formInput, setFormInput] = useState(initialState);
   const [types, setTypes] = useState([]);
   const [occasions, setOccasions] = useState([]);
   const router = useRouter();
@@ -42,18 +42,22 @@ export default function HairstyleForm({ hairstyleObj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const payload = { ...formInput, uid: user.uid };
-    createHairstyle(payload).then(({ name }) => {
-      const patchPayload = { firebaseKey: name };
-      updateHairstyle(patchPayload).then(() => {
-        router.push('/myhairstyles');
+    if (hairstyleObj.firebaseKey) {
+      updateHairstyle(formInput).then(() => router.push('/myhairstyles'));
+    } else {
+      const payload = { ...formInput, uid: user.uid };
+      createHairstyle(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+        updateHairstyle(patchPayload).then(() => {
+          router.push('/myhairstyles');
+        });
       });
-    });
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h1 className="text-black mt-5 audio">Create Hairstyle</h1>
+      <h1 className="text-black mt-5 audio">{hairstyleObj.firebaseKey ? 'Update' : 'Create'} Hairstyle</h1>
 
       {/* Hairstyle Name Input */}
       <Form.Group className="mb-3" controlId="floatingInput1">
@@ -73,7 +77,7 @@ export default function HairstyleForm({ hairstyleObj }) {
         <Form.Label>Hairstyle Image</Form.Label>
         <Form.Control
           type="url"
-          placeholder="Image URL of the hairstyle."
+          placeholder="Image URL of the hairstyle"
           name="image"
           value={formInput.image}
           onChange={handleChange}
@@ -152,7 +156,7 @@ export default function HairstyleForm({ hairstyleObj }) {
 
       {/* Hairstyle Create Button */}
       <div className="flex justify-content-center">
-        <Button type="submit">CREATE</Button>
+        <Button type="submit">{hairstyleObj.firebaseKey ? 'Update' : 'Create'}</Button>
       </div>
 
     </Form>
@@ -174,5 +178,5 @@ HairstyleForm.propTypes = {
 };
 
 HairstyleForm.defaultProps = {
-  hairstyleObj: initialValue,
+  hairstyleObj: initialState,
 };
