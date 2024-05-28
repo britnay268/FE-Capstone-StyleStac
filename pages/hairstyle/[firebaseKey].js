@@ -1,9 +1,29 @@
-import React from 'react';
+/* eslint-disable @next/next/no-img-element */
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import getAllHairstyleInfo from '../../api/mergedData';
 
 export default function HairstyleDetails() {
+  const [hairstyleDetails, setHairstyleDetails] = useState([]);
+
+  const router = useRouter();
+
+  const { firebaseKey } = router.query;
+
+  useEffect(() => {
+    getAllHairstyleInfo(firebaseKey).then(setHairstyleDetails);
+  }, [firebaseKey]);
+
   return (
-    <div>
-      This is the details of the hairstlye.
-    </div>
+    <>
+      <h3 style={{ color: 'white' }}>{hairstyleDetails.name}</h3>
+      <img src={hairstyleDetails.image} alt={hairstyleDetails.name} style={{ width: '300px' }} />
+      <div style={{ color: 'white' }}>
+        <p>Date Done: {hairstyleDetails.date_done}</p>
+        <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
+        <p>Type: {hairstyleDetails.type.name}</p>
+        <p>Occasion: {hairstyleDetails.occasion.name}</p>
+      </div>
+    </>
   );
 }

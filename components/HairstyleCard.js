@@ -33,7 +33,9 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
         <Card.Title>{hairstyleObj.name}</Card.Title>
         <p>Type: {hairstyle.type?.name}</p>
         <p>Occasion: {hairstyle.occasion?.name}</p>
-        <Button variant="warning"><GrFormView /></Button>
+        <Link href={`/hairstyle/${hairstyleObj.firebaseKey}`} passHref>
+          <Button variant="warning"><GrFormView /></Button>
+        </Link>
         {router.asPath !== '/hairstyles' && (
           <>
             <Link href={`/hairstyle/edit/${hairstyleObj.firebaseKey}`} passHref>
