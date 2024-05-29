@@ -89,6 +89,26 @@ const deleteHairstyle = (firebaseKey) => new Promise((resolve, reject) => {
     .then((data) => resolve(data))
     .catch(reject);
 });
+
+const favoriteHairstyle = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyles.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const favHairstyle = Object.values(data).filter((obj) => obj.favorite);
+        resolve(favHairstyle);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 export {
-  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle,
+  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle,
 };

@@ -43,7 +43,7 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
       <Card.Body>
         <div className="favorite_position">
           <Card.Title>{hairstyleObj.name}</Card.Title>
-          {router.asPath === '/myhairstyles' && <Button onClick={toggleFavorite}>{isFavorite ? <FaStar /> : <FaRegStar />}</Button>}
+          {router.asPath !== '/hairstyles' && <Button onClick={toggleFavorite}>{isFavorite ? <FaStar /> : <FaRegStar />}</Button>}
         </div>
         <p>Type: {hairstyle.type?.name}</p>
         <p>Occasion: {hairstyle.occasion?.name}</p>
