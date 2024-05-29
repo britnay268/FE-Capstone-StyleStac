@@ -93,7 +93,7 @@ export default function HairstyleForm({ hairstyleObj }) {
           name="type_id"
           onChange={handleChange}
           className="mb-3"
-          value={hairstyleObj.type_id}
+          value={formInput.type_id}
           required
         >
           <option value="">Select Hairstyle Type</option>
@@ -118,7 +118,7 @@ export default function HairstyleForm({ hairstyleObj }) {
           name="occasion_id"
           onChange={handleChange}
           className="mb-3"
-          value={hairstyleObj.occasion_id}
+          value={formInput.occasion_id}
           required
         >
           <option value="">Select Hairstyle Occasion</option>

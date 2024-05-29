@@ -29,6 +29,9 @@ export default function NavBarAuth() {
             <Link passHref href="/hairstyle/new">
               <Nav.Link>Create Hairstyles</Nav.Link>
             </Link>
+            <Link passHref href="/favoriteHairstyle">
+              <Nav.Link>Favorite Hairstyles</Nav.Link>
+            </Link>
             <Button variant="danger" onClick={signOut}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
