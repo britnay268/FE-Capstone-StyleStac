@@ -27,3 +27,14 @@ body {
 h1, Form {
   color: white;
 }
+
+.favorite_position {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+svg {
+  height: 2em;
+  width: 1.5em;
+}
