@@ -28,6 +28,7 @@ export default function HairstyleForm({ hairstyleObj }) {
     // Get all hairstyle occasions
     getAllHairstyleOccasion().then(setOccasions);
 
+    // Put in a seperate udeEffect - Optional
     if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
   }, [hairstyleObj, user]);
 
