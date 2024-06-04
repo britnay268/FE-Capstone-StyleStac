@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { GrFormView } from 'react-icons/gr';
 import { RiEditLine } from 'react-icons/ri';
 import { MdDeleteForever } from 'react-icons/md';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { TbListDetails } from 'react-icons/tb';
 import getAllHairstyleInfo from '../api/mergedData';
 import { deleteHairstyle, updateHairstyle } from '../api/HairstyleData';
 
@@ -38,24 +38,24 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
   }, []);
 
   return (
-    <Card style={{ width: '18rem', margin: '20px 0px' }}>
-      <Card.Img variant="top" src={hairstyleObj.image} style={{ height: '300px' }} />
+    <Card className="hairstyle-card">
+      <Card.Img variant="top" src={hairstyleObj.image} className="hairstyle-image" />
       <Card.Body>
         <div className="favorite_position">
-          <Card.Title>{hairstyleObj.name}</Card.Title>
-          {router.asPath !== '/hairstyles' && <Button onClick={toggleFavorite}>{isFavorite ? <FaStar /> : <FaRegStar />}</Button>}
+          <Card.Title style={{ marginBottom: '16px' }}>{hairstyleObj.name}</Card.Title>
+          {router.asPath !== '/hairstyles' && <Button onClick={toggleFavorite} className="favorite">{isFavorite ? <FaStar className="star" /> : <FaRegStar className="star" />}</Button>}
         </div>
-        <p>Type: {hairstyle.type?.name}</p>
-        <p>Occasion: {hairstyle.occasion?.name}</p>
+        <p style={{ marginBottom: '8px' }}><strong>Type:</strong> {hairstyle.type?.name}</p>
+        <p><strong>Occasion:</strong> {hairstyle.occasion?.name}</p>
         <Link href={`/hairstyle/${hairstyleObj.firebaseKey}`} passHref>
-          <Button variant="warning"><GrFormView /></Button>
+          <Button variant="warning" className="hairstyle-button"><TbListDetails /></Button>
         </Link>
         {router.asPath !== '/hairstyles' && (
           <>
             <Link href={`/hairstyle/edit/${hairstyleObj.firebaseKey}`} passHref>
-              <Button variant="success"><RiEditLine /></Button>
+              <Button variant="success" className="hairstyle-editbutton"><RiEditLine /></Button>
             </Link>
-            <Button variant="danger" onClick={deleteTheHairstyle}><MdDeleteForever /></Button>
+            <Button variant="danger" className="hairstyle-button" onClick={deleteTheHairstyle}><MdDeleteForever /></Button>
           </>
         )}
       </Card.Body>

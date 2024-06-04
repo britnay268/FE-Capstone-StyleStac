@@ -18,7 +18,7 @@ export default function FavoriteHairstyle() {
 
   return (
     <>
-      <div className="d-flex flex-wrap justify-content-between">
+      <div className="hairstyle-page">
         {favHairstyles?.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>You Have No Hairstyles</h1> : favHairstyles?.map((hairstyle) => (
           <HairstyleCard key={hairstyle.firebaseKey} hairstyleObj={hairstyle} onUpdate={getFavoriteHairstyles} />
         ))}

@@ -38,3 +38,131 @@ svg {
   height: 2em;
   width: 1.5em;
 }
+
+.signIn-button {
+  background-color: #B8A07F;
+  border: none;
+  border-radius: 20pc;
+  width: fit-content;
+  margin: 0 auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: #42331A;
+}
+
+.signIn-button:hover {
+  background-color: #42331A;
+  border: #B8A07F 1px solid;
+  color: #B8A07F;
+}
+
+.signIn-image {
+  color: wheat;
+  margin-bottom: 20px;
+}
+
+.details {
+  background-color: #B8A07F;
+  border-radius: 0.5rem;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 80px;
+  width: fit-content;
+  height: 100vh; 
+}
+
+.hairstyle-image {
+  height: 300px; 
+  border-radius: 20px;
+}
+
+.hairstyle-card {
+  width: 18rem; 
+  margin: 20px 15px; 
+  border-radius: 20px; 
+  border: none;
+  background-color: rgba(66, 51, 26, 0.5);
+  color: whitesmoke;
+}
+
+.hairstyle-page {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.signIn-container {
+  padding: 50px;
+  max-width: 800px;
+  margin: 100px auto;
+  background-color: #42331A;
+  border-radius: 50px;
+}
+
+.favorite {
+  background-color: #42331A;
+  border: none;
+  padding: 0px 5px;
+}
+
+.favorite:hover {
+  background-color: rgba(184, 160, 127, 0.5);
+}
+
+.star {
+  color: gold;
+}
+
+.hairstyle-button {
+  border-radius: 40px;
+  padding: 0.5px 12px;
+}
+
+.hairstyle-editbutton {
+  border-radius: 40px;
+  padding: 0.5px 12px;
+  margin: 0px 5px;
+}
+
+.form-background {
+  /* display: inline-block; */
+  background-color: rgba(184, 160, 127, 0.75);
+  padding: 3em 5em;
+  margin: 4em 13em;
+  border-radius: 2em;
+}
+
+Label {
+  color: #42331A;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.form-title {
+  text-align: center;
+  color: #42331A;
+  margin-bottom: 16px;
+}
+
+.form-button {
+  margin: 0px 10px;
+  background-color: #42331A;
+  border: none;
+  border-radius: 20pc;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: #B8A07F;
+}
+
+.form-button:hover {
+  background-color: #B8A07F;
+  border: #42331A 1px solid;
+  color: #42331A;
+}
+
+.form-button-div {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}

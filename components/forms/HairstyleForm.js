@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { getAllHairstyleType } from '../../api/HairstyleTypeData';
 import { getAllHairstyleOccasion } from '../../api/HairstyleOccasionData';
 import { createHairstyle, updateHairstyle } from '../../api/HairstyleData';
@@ -28,6 +29,7 @@ export default function HairstyleForm({ hairstyleObj }) {
     // Get all hairstyle occasions
     getAllHairstyleOccasion().then(setOccasions);
 
+    // Put in a seperate udeEffect - Optional
     if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
   }, [hairstyleObj, user]);
 
@@ -56,8 +58,8 @@ export default function HairstyleForm({ hairstyleObj }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h1 className="text-black mt-5 audio">{hairstyleObj.firebaseKey ? 'Update' : 'Create'} Hairstyle</h1>
+    <Form className="form-background" onSubmit={handleSubmit}>
+      <h1 className="mt-5 audio form-title">{hairstyleObj.firebaseKey ? 'Update' : 'Create'} Hairstyle</h1>
 
       {/* Hairstyle Name Input */}
       <Form.Group className="mb-3" controlId="floatingInput1">
@@ -155,8 +157,11 @@ export default function HairstyleForm({ hairstyleObj }) {
       </Form.Group>
 
       {/* Hairstyle Create Button */}
-      <div className="flex justify-content-center">
-        <Button type="submit">{hairstyleObj.firebaseKey ? 'Update' : 'Create'}</Button>
+      <div className="form-button-div">
+        <Button className="form-button" type="submit">{hairstyleObj.firebaseKey ? 'Update' : 'Create'}</Button>
+        <Link passHref href="/myhairstyles">
+          <Button className="form-button" type="submit">Back</Button>
+        </Link>
       </div>
 
     </Form>
