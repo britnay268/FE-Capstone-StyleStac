@@ -15,7 +15,7 @@ export default function ShowAllHairstlyes() {
 
   return (
     <>
-      <div className="d-flex flex-wrap">
+      <div className="hairstyle-page">
         {hairstyles?.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>You Have No Hairstyles</h1> : hairstyles?.map((hairstyle) => (
           <HairstyleCard key={hairstyle.firebaseKey} hairstyleObj={hairstyle} onUpdate={getAllTheHairstyles} />
         ))}

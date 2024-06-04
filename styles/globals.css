@@ -78,11 +78,18 @@ svg {
 
 .hairstyle-card {
   width: 18rem; 
-  margin: 20px; 
+  margin: 20px 15px; 
   border-radius: 20px; 
   border: none;
   background-color: rgba(66, 51, 26, 0.5);
   color: whitesmoke;
+}
+
+.hairstyle-page {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .signIn-container {
@@ -116,4 +123,46 @@ svg {
   border-radius: 40px;
   padding: 0.5px 12px;
   margin: 0px 5px;
+}
+
+.form-background {
+  /* display: inline-block; */
+  background-color: rgba(184, 160, 127, 0.75);
+  padding: 3em 5em;
+  margin: 4em 13em;
+  border-radius: 2em;
+}
+
+Label {
+  color: #42331A;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.form-title {
+  text-align: center;
+  color: #42331A;
+  margin-bottom: 16px;
+}
+
+.form-button {
+  margin: 0px 10px;
+  background-color: #42331A;
+  border: none;
+  border-radius: 20pc;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: #B8A07F;
+}
+
+.form-button:hover {
+  background-color: #B8A07F;
+  border: #42331A 1px solid;
+  color: #42331A;
+}
+
+.form-button-div {
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
