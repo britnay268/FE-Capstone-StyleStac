@@ -7,6 +7,7 @@ import { getAllHairstyleType } from '../../api/HairstyleTypeData';
 import { getAllHairstyleOccasion } from '../../api/HairstyleOccasionData';
 import { createHairstyle, updateHairstyle } from '../../api/HairstyleData';
 import { useAuth } from '../../utils/context/authContext';
+import { storage } from '../../utils/client';
 
 const initialState = {
   name: '',
@@ -21,6 +22,8 @@ export default function HairstyleForm({ hairstyleObj }) {
   const [occasions, setOccasions] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
+
+  const [imageAsFile, setImageAsFile] = useState('');
 
   useEffect(() => {
     // Get all hairstyle types
@@ -55,6 +58,19 @@ export default function HairstyleForm({ hairstyleObj }) {
         });
       });
     }
+
+    if (!imageAsFile) {
+      console.warn(`not an image, the image file is a ${typeof (imageAsFile)}`);
+    }
+
+    storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+  };
+
+  const handleImage = (e) => {
+    // This gets the image data
+    const image = e.target.files[0];
+    // console.warn(image);
+    setImageAsFile(image);
   };
 
   return (
@@ -69,19 +85,6 @@ export default function HairstyleForm({ hairstyleObj }) {
           placeholder="Name of hairstyle"
           name="name"
           value={formInput.name}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-
-      {/* Hairstyle Image Input */}
-      <Form.Group className="mb-3" controlId="floatingInput1">
-        <Form.Label>Hairstyle Image</Form.Label>
-        <Form.Control
-          type="url"
-          placeholder="Image URL of the hairstyle"
-          name="image"
-          value={formInput.image}
           onChange={handleChange}
           required
         />
@@ -155,6 +158,21 @@ export default function HairstyleForm({ hairstyleObj }) {
         <Form.Label>Date Done</Form.Label>
         <Form.Control type="date" id="date_done" name="date_done" value={formInput.date_done} min="1910-10-31" max="2025-1-30" onChange={handleChange} />
       </Form.Group>
+
+      {/* Hairstyle Image Input */}
+      <Form.Group controlId="floatingInput1">
+        <Form.Label>Hairstyle Image</Form.Label>
+        {/* <Form.Control
+          type="url"
+          placeholder="Image URL of the hairstyle"
+          name="image"
+          value={formInput.image}
+          onChange={handleChange}
+          required
+        /> */}
+      </Form.Group>
+
+      <input type="file" className="form-image" onChange={handleImage} />
 
       {/* Hairstyle Create Button */}
       <div className="form-button-div">
