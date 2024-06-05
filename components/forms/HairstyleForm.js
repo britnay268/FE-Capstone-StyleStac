@@ -11,9 +11,11 @@ import { storage } from '../../utils/client';
 
 const initialState = {
   name: '',
-  image: '',
   durationOfHairstyle: '',
   date_done: '',
+  public: false,
+  favorite: false,
+  stylist_id: '',
 };
 
 export default function HairstyleForm({ hairstyleObj }) {
@@ -45,12 +47,23 @@ export default function HairstyleForm({ hairstyleObj }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!imageAsFile) {
+      console.warn(`not an image, the image file is a ${typeof (imageAsFile)}`);
+    }
+
+    // Stores image in storage on firebase
+    storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+
+    const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
+    console.warn(url);
+
     if (hairstyleObj.firebaseKey) {
       updateHairstyle(formInput).then(() => router.push('/myhairstyles'));
     } else {
-      const payload = { ...formInput, uid: user.uid };
+      const payload = { ...formInput, uid: user.uid, image: url };
       createHairstyle(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateHairstyle(patchPayload).then(() => {
@@ -58,12 +71,6 @@ export default function HairstyleForm({ hairstyleObj }) {
         });
       });
     }
-
-    if (!imageAsFile) {
-      console.warn(`not an image, the image file is a ${typeof (imageAsFile)}`);
-    }
-
-    storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
   };
 
   const handleImage = (e) => {
@@ -162,14 +169,6 @@ export default function HairstyleForm({ hairstyleObj }) {
       {/* Hairstyle Image Input */}
       <Form.Group controlId="floatingInput1">
         <Form.Label>Hairstyle Image</Form.Label>
-        {/* <Form.Control
-          type="url"
-          placeholder="Image URL of the hairstyle"
-          name="image"
-          value={formInput.image}
-          onChange={handleChange}
-          required
-        /> */}
       </Form.Group>
 
       <input type="file" className="form-image" onChange={handleImage} />
@@ -189,7 +188,6 @@ export default function HairstyleForm({ hairstyleObj }) {
 HairstyleForm.propTypes = {
   hairstyleObj: PropTypes.shape({
     name: PropTypes.string,
-    image: PropTypes.string,
     durationOfHairstyle: PropTypes.string,
     date_done: PropTypes.string,
     firebaseKey: PropTypes.string,
@@ -197,6 +195,7 @@ HairstyleForm.propTypes = {
     favorite: PropTypes.bool,
     type_id: PropTypes.string,
     occasion_id: PropTypes.string,
+    stylist_id: PropTypes.string,
   }),
 };
 
