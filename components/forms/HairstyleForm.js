@@ -57,8 +57,8 @@ export default function HairstyleForm({ hairstyleObj }) {
     // Stores image in storage on firebase
     storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
 
+    // Gets url path for imge
     const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
-    console.warn(url);
 
     if (hairstyleObj.firebaseKey) {
       updateHairstyle(formInput).then(() => router.push('/myhairstyles'));
