@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import {
+  Button, Form, ToggleButton, ToggleButtonGroup,
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -61,7 +63,7 @@ export default function HairstyleForm({ hairstyleObj }) {
     const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
 
     if (hairstyleObj.firebaseKey) {
-      updateHairstyle(formInput).then(() => router.push('/myhairstyles'));
+      updateHairstyle(...formInput).then(() => router.push('/myhairstyles'));
     } else {
       const payload = { ...formInput, uid: user.uid, image: url };
       createHairstyle(payload).then(({ name }) => {
@@ -78,6 +80,14 @@ export default function HairstyleForm({ hairstyleObj }) {
     const image = e.target.files[0];
     // console.warn(image);
     setImageAsFile(image);
+  };
+
+  const handleToggleChange = () => {
+    setFormInput((prevState) => ({
+      ...prevState,
+      // this updates the private property in formInput by using ! to toggle the value meaning if it was true, then it becomes false and vice versa.
+      public: !prevState.public,
+    }));
   };
 
   return (
@@ -172,6 +182,17 @@ export default function HairstyleForm({ hairstyleObj }) {
       </Form.Group>
 
       <input type="file" className="form-image" onChange={handleImage} />
+
+      <ToggleButtonGroup type="checkbox" style={{ marginBottom: '10px' }}>
+        <ToggleButton
+          checked={formInput.private}
+          value={formInput}
+          onClick={handleToggleChange}
+          style={{ backgroundColor: formInput.public ? 'green' : 'red', border: 'none', display: 'block' }}
+        >
+          {formInput.public ? 'Public' : 'Private'}
+        </ToggleButton>
+      </ToggleButtonGroup>
 
       {/* Hairstyle Create Button */}
       <div className="form-button-div">

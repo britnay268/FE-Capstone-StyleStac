@@ -9,7 +9,7 @@ import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { TbListDetails } from 'react-icons/tb';
-import getAllHairstyleInfo from '../api/mergedData';
+import { getAllHairstyleInfo } from '../api/mergedData';
 import { deleteHairstyle, updateHairstyle } from '../api/HairstyleData';
 
 export default function HairstyleCard({ hairstyleObj, onUpdate }) {

@@ -109,6 +109,44 @@ const favoriteHairstyle = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getPublicHairstyleWithUid = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyles.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const publicHairstyle = Object.values(data).filter((obj) => obj.public);
+        resolve(publicHairstyle);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+const getPublicHairstyleWithoutUid = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyles.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const publicHairstyle = Object.values(data).filter((obj) => obj.public);
+        resolve(publicHairstyle);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 export {
-  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle,
+  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle, getPublicHairstyleWithUid, getPublicHairstyleWithoutUid,
 };
