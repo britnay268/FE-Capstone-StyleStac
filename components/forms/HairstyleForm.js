@@ -7,12 +7,15 @@ import { getAllHairstyleType } from '../../api/HairstyleTypeData';
 import { getAllHairstyleOccasion } from '../../api/HairstyleOccasionData';
 import { createHairstyle, updateHairstyle } from '../../api/HairstyleData';
 import { useAuth } from '../../utils/context/authContext';
+import { storage } from '../../utils/client';
 
 const initialState = {
   name: '',
-  image: '',
   durationOfHairstyle: '',
   date_done: '',
+  public: false,
+  favorite: false,
+  stylist_id: '',
 };
 
 export default function HairstyleForm({ hairstyleObj }) {
@@ -21,6 +24,8 @@ export default function HairstyleForm({ hairstyleObj }) {
   const [occasions, setOccasions] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
+
+  const [imageAsFile, setImageAsFile] = useState('');
 
   useEffect(() => {
     // Get all hairstyle types
@@ -42,12 +47,23 @@ export default function HairstyleForm({ hairstyleObj }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!imageAsFile) {
+      console.warn(`not an image, the image file is a ${typeof (imageAsFile)}`);
+    }
+
+    // Stores image in storage on firebase
+    storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+
+    // Gets url path for imge
+    const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
+
     if (hairstyleObj.firebaseKey) {
       updateHairstyle(formInput).then(() => router.push('/myhairstyles'));
     } else {
-      const payload = { ...formInput, uid: user.uid };
+      const payload = { ...formInput, uid: user.uid, image: url };
       createHairstyle(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateHairstyle(patchPayload).then(() => {
@@ -55,6 +71,13 @@ export default function HairstyleForm({ hairstyleObj }) {
         });
       });
     }
+  };
+
+  const handleImage = (e) => {
+    // This gets the image data
+    const image = e.target.files[0];
+    // console.warn(image);
+    setImageAsFile(image);
   };
 
   return (
@@ -69,19 +92,6 @@ export default function HairstyleForm({ hairstyleObj }) {
           placeholder="Name of hairstyle"
           name="name"
           value={formInput.name}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-
-      {/* Hairstyle Image Input */}
-      <Form.Group className="mb-3" controlId="floatingInput1">
-        <Form.Label>Hairstyle Image</Form.Label>
-        <Form.Control
-          type="url"
-          placeholder="Image URL of the hairstyle"
-          name="image"
-          value={formInput.image}
           onChange={handleChange}
           required
         />
@@ -156,6 +166,13 @@ export default function HairstyleForm({ hairstyleObj }) {
         <Form.Control type="date" id="date_done" name="date_done" value={formInput.date_done} min="1910-10-31" max="2025-1-30" onChange={handleChange} />
       </Form.Group>
 
+      {/* Hairstyle Image Input */}
+      <Form.Group controlId="floatingInput1">
+        <Form.Label>Hairstyle Image</Form.Label>
+      </Form.Group>
+
+      <input type="file" className="form-image" onChange={handleImage} />
+
       {/* Hairstyle Create Button */}
       <div className="form-button-div">
         <Button className="form-button" type="submit">{hairstyleObj.firebaseKey ? 'Update' : 'Create'}</Button>
@@ -171,7 +188,6 @@ export default function HairstyleForm({ hairstyleObj }) {
 HairstyleForm.propTypes = {
   hairstyleObj: PropTypes.shape({
     name: PropTypes.string,
-    image: PropTypes.string,
     durationOfHairstyle: PropTypes.string,
     date_done: PropTypes.string,
     firebaseKey: PropTypes.string,
@@ -179,6 +195,7 @@ HairstyleForm.propTypes = {
     favorite: PropTypes.bool,
     type_id: PropTypes.string,
     occasion_id: PropTypes.string,
+    stylist_id: PropTypes.string,
   }),
 };
 

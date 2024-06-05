@@ -4,9 +4,16 @@ import Link from 'next/link';
 import {
   Navbar, Container, Nav, Button,
 } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 import { signOut } from '../utils/auth';
 
 export default function NavBarAuth() {
+  const router = useRouter();
+
+  const handleChange = async () => {
+    await router.push('/');
+    signOut();
+  };
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -32,7 +39,7 @@ export default function NavBarAuth() {
             <Link passHref href="/favoriteHairstyle">
               <Nav.Link>Favorite Hairstyles</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
+            <Button variant="danger" onClick={handleChange}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

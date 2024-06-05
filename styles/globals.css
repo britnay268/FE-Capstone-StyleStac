@@ -166,3 +166,7 @@ Label {
   align-content: center;
   justify-content: center;
 }
+
+.form-image {
+  margin-bottom: 16px;
+}
