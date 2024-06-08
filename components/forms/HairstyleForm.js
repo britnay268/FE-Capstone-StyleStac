@@ -49,7 +49,7 @@ export default function HairstyleForm({ hairstyleObj }) {
       setFormInput(hairstyleObj);
       // console.warn(hairstyleObj.image);
     }
-  }, []);
+  }, [hairstyleObj]);
 
   // Without this, you will not be able to input values into the input field of the form
   const handleChange = (e) => {
@@ -68,13 +68,13 @@ export default function HairstyleForm({ hairstyleObj }) {
     }
 
     // Stores image in storage on firebase
-    storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+    await storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
 
     // Gets url path for imge
     const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
 
     if (hairstyleObj.firebaseKey) {
-      const payload2 = { ...formInput };
+      const payload2 = { ...formInput, image: url };
       updateHairstyle(payload2).then(() => router.push('/myhairstyles'));
     } else {
       const payload = { ...formInput, uid: user.uid, image: url };
@@ -196,7 +196,7 @@ export default function HairstyleForm({ hairstyleObj }) {
       {hairstyleObj.firebaseKey && hairstyleObj.image && (
         <>
           <p style={{ marginBottom: '0px' }}>Existing Image</p>
-          <img src={hairstyleObj.image} alt="Existing Hairstyle" className="existing-hairstyle-image" style={{ height: '50px', display: 'block', marginBottom: '10px' }} />
+          <img src={hairstyleObj.image} alt="Existing Hairstyle" className="existing-hairstyle-image" />
         </>
       )}
 
