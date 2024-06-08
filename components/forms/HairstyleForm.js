@@ -202,12 +202,12 @@ export default function HairstyleForm({ hairstyleObj }) {
 
       <input type="file" className="form-image" onChange={handleImage} />
 
-      <ToggleButtonGroup type="checkbox" style={{ marginBottom: '10px' }}>
+      <ToggleButtonGroup type="checkbox" style={{ marginBottom: '10px', display: 'block', width: 'fit-content' }}>
         <ToggleButton
           checked={formInput.private}
           value={formInput}
           onClick={handleToggleChange}
-          style={{ backgroundColor: formInput.public ? 'green' : 'red', border: 'none', display: 'block' }}
+          style={{ backgroundColor: formInput.public ? 'green' : 'red', border: 'none' }}
         >
           {formInput.public ? 'Public' : 'Private'}
         </ToggleButton>
