@@ -10,7 +10,7 @@ export default function SearchBar({ onSearch }) {
     <Form className="d-flex text search">
       <Form.Control
         type="search"
-        placeholder="Search"
+        placeholder="Search Hairstyle Name"
         className="me-2 search-bar"
         aria-label="Search"
         name="search"
