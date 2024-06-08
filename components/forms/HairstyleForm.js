@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import {
   Button, Form, ToggleButton, ToggleButtonGroup,
@@ -18,7 +20,9 @@ const initialState = {
   public: false,
   favorite: false,
   stylist_id: '',
+  image: '',
 };
+// Issues: On edit, the attached image doesn't show and when I try to update the imagge, it says image does not exist and then when I press update again, it loads the image
 
 export default function HairstyleForm({ hairstyleObj }) {
   const [formInput, setFormInput] = useState(initialState);
@@ -36,9 +40,16 @@ export default function HairstyleForm({ hairstyleObj }) {
     // Get all hairstyle occasions
     getAllHairstyleOccasion().then(setOccasions);
 
-    // Put in a seperate udeEffect - Optional
-    if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
+    // Put in a seperate useEffect - Optional
+    // if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
   }, [hairstyleObj, user]);
+
+  useEffect(() => {
+    if (hairstyleObj.firebaseKey) {
+      setFormInput(hairstyleObj);
+      // console.warn(hairstyleObj.image);
+    }
+  }, []);
 
   // Without this, you will not be able to input values into the input field of the form
   const handleChange = (e) => {
@@ -63,7 +74,8 @@ export default function HairstyleForm({ hairstyleObj }) {
     const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
 
     if (hairstyleObj.firebaseKey) {
-      updateHairstyle(...formInput).then(() => router.push('/myhairstyles'));
+      const payload2 = { ...formInput };
+      updateHairstyle(payload2).then(() => router.push('/myhairstyles'));
     } else {
       const payload = { ...formInput, uid: user.uid, image: url };
       createHairstyle(payload).then(({ name }) => {
@@ -181,6 +193,13 @@ export default function HairstyleForm({ hairstyleObj }) {
         <Form.Label>Hairstyle Image</Form.Label>
       </Form.Group>
 
+      {hairstyleObj.firebaseKey && hairstyleObj.image && (
+        <>
+          <p style={{ marginBottom: '0px' }}>Existing Image</p>
+          <img src={hairstyleObj.image} alt="Existing Hairstyle" className="existing-hairstyle-image" style={{ height: '50px', display: 'block', marginBottom: '10px' }} />
+        </>
+      )}
+
       <input type="file" className="form-image" onChange={handleImage} />
 
       <ToggleButtonGroup type="checkbox" style={{ marginBottom: '10px' }}>
@@ -217,6 +236,7 @@ HairstyleForm.propTypes = {
     type_id: PropTypes.string,
     occasion_id: PropTypes.string,
     stylist_id: PropTypes.string,
+    image: PropTypes.string,
   }),
 };
 
