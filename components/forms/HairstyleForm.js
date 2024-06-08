@@ -20,7 +20,6 @@ const initialState = {
   public: false,
   favorite: false,
   stylist_id: '',
-  image: '',
 };
 // Issues: On edit, the attached image doesn't show and when I try to update the imagge, it says image does not exist and then when I press update again, it loads the image
 
@@ -75,7 +74,8 @@ export default function HairstyleForm({ hairstyleObj }) {
 
     if (hairstyleObj.firebaseKey) {
       const payload2 = { ...formInput, image: url };
-      updateHairstyle(payload2).then(() => router.push('/myhairstyles'));
+      const payload3 = { ...formInput };
+      updateHairstyle(imageAsFile ? payload2 : payload3).then(() => router.push('/myhairstyles'));
     } else {
       const payload = { ...formInput, uid: user.uid, image: url };
       createHairstyle(payload).then(({ name }) => {
