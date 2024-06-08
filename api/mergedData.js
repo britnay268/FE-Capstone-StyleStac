@@ -1,4 +1,4 @@
-import { getSingleHairstyle } from './HairstyleData';
+import { getPublicHairstyleWithUid, getPublicHairstyleWithoutUid, getSingleHairstyle } from './HairstyleData';
 import { getSingleHairstyleOccasion } from './HairstyleOccasionData';
 import { getSingleHairstyleType } from './HairstyleTypeData';
 
@@ -10,4 +10,12 @@ const getAllHairstyleInfo = async (hairstyleFirebaseKey) => {
   return { ...hairstyle, type, occasion };
 };
 
-export default getAllHairstyleInfo;
+const getPublicHairstyle = async (uid) => {
+  const hairstyleWithoutUid = await getPublicHairstyleWithoutUid();
+  const hairstyleWithUid = await getPublicHairstyleWithUid(uid);
+
+  // console.warn([...hairstyleWithoutUid, ...hairstyleWithUid]);
+  return [...hairstyleWithUid, ...hairstyleWithoutUid];
+};
+
+export { getAllHairstyleInfo, getPublicHairstyle };

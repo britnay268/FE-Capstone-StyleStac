@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getAllHairstyles } from '../api/HairstyleData';
 import HairstyleCard from '../components/HairstyleCard';
+import { getPublicHairstyle } from '../api/mergedData';
 
 export default function ShowAllHairstlyes() {
   const [hairstyles, setHairstyles] = useState();
 
   const getAllTheHairstyles = () => {
-    getAllHairstyles().then(setHairstyles);
+    getPublicHairstyle().then(setHairstyles);
   };
 
   useEffect(() => {

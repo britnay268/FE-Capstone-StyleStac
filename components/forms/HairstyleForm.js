@@ -1,5 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import {
+  Button, Form, ToggleButton, ToggleButtonGroup,
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -17,6 +21,7 @@ const initialState = {
   favorite: false,
   stylist_id: '',
 };
+// Issues: On edit, the attached image doesn't show and when I try to update the imagge, it says image does not exist and then when I press update again, it loads the image
 
 export default function HairstyleForm({ hairstyleObj }) {
   const [formInput, setFormInput] = useState(initialState);
@@ -34,9 +39,16 @@ export default function HairstyleForm({ hairstyleObj }) {
     // Get all hairstyle occasions
     getAllHairstyleOccasion().then(setOccasions);
 
-    // Put in a seperate udeEffect - Optional
-    if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
+    // Put in a seperate useEffect - Optional
+    // if (hairstyleObj.firebaseKey) setFormInput(hairstyleObj);
   }, [hairstyleObj, user]);
+
+  useEffect(() => {
+    if (hairstyleObj.firebaseKey) {
+      setFormInput(hairstyleObj);
+      // console.warn(hairstyleObj.image);
+    }
+  }, [hairstyleObj]);
 
   // Without this, you will not be able to input values into the input field of the form
   const handleChange = (e) => {
@@ -55,13 +67,15 @@ export default function HairstyleForm({ hairstyleObj }) {
     }
 
     // Stores image in storage on firebase
-    storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
+    await storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile);
 
     // Gets url path for imge
     const url = await storage.ref(`images/${imageAsFile.name}`).getDownloadURL();
 
     if (hairstyleObj.firebaseKey) {
-      updateHairstyle(formInput).then(() => router.push('/myhairstyles'));
+      const payload2 = { ...formInput, image: url };
+      const payload3 = { ...formInput };
+      updateHairstyle(imageAsFile ? payload2 : payload3).then(() => router.push('/myhairstyles'));
     } else {
       const payload = { ...formInput, uid: user.uid, image: url };
       createHairstyle(payload).then(({ name }) => {
@@ -78,6 +92,14 @@ export default function HairstyleForm({ hairstyleObj }) {
     const image = e.target.files[0];
     // console.warn(image);
     setImageAsFile(image);
+  };
+
+  const handleToggleChange = () => {
+    setFormInput((prevState) => ({
+      ...prevState,
+      // this updates the private property in formInput by using ! to toggle the value meaning if it was true, then it becomes false and vice versa.
+      public: !prevState.public,
+    }));
   };
 
   return (
@@ -171,7 +193,25 @@ export default function HairstyleForm({ hairstyleObj }) {
         <Form.Label>Hairstyle Image</Form.Label>
       </Form.Group>
 
+      {hairstyleObj.firebaseKey && hairstyleObj.image && (
+        <>
+          <p style={{ marginBottom: '0px' }}>Existing Image</p>
+          <img src={hairstyleObj.image} alt="Existing Hairstyle" className="existing-hairstyle-image" />
+        </>
+      )}
+
       <input type="file" className="form-image" onChange={handleImage} />
+
+      <ToggleButtonGroup type="checkbox" style={{ marginBottom: '10px', display: 'block', width: 'fit-content' }}>
+        <ToggleButton
+          checked={formInput.private}
+          value={formInput}
+          onClick={handleToggleChange}
+          style={{ backgroundColor: formInput.public ? 'green' : 'red', border: 'none' }}
+        >
+          {formInput.public ? 'Public' : 'Private'}
+        </ToggleButton>
+      </ToggleButtonGroup>
 
       {/* Hairstyle Create Button */}
       <div className="form-button-div">
@@ -196,6 +236,7 @@ HairstyleForm.propTypes = {
     type_id: PropTypes.string,
     occasion_id: PropTypes.string,
     stylist_id: PropTypes.string,
+    image: PropTypes.string,
   }),
 };
 

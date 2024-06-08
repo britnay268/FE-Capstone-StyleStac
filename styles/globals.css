@@ -170,3 +170,9 @@ Label {
 .form-image {
   margin-bottom: 16px;
 }
+
+.existing-hairstyle-image {
+  height: 50px; 
+  display: block; 
+  margin-bottom: 10px;
+}
