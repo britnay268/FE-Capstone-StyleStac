@@ -157,7 +157,27 @@ const getHairstylesbyType = (firebaseKey) => new Promise((resolve, reject) => {
     .then((response) => response.json())
     .then((data) => {
       if (data) {
-        resolve(Object.values(data));
+        const publicHairstyle = Object.values(data).filter((obj) => obj.public);
+        resolve(publicHairstyle);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+const getHairstylesbyOccasion = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyles.json?orderBy="occasion_id"&equalTo="${firebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const publicHairstyle = Object.values(data).filter((obj) => obj.public);
+        resolve(publicHairstyle);
       } else {
         resolve([]);
       }
@@ -166,5 +186,5 @@ const getHairstylesbyType = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 export {
-  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle, getPublicHairstyleWithUid, getPublicHairstyleWithoutUid, getHairstylesbyType,
+  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle, getPublicHairstyleWithUid, getPublicHairstyleWithoutUid, getHairstylesbyType, getHairstylesbyOccasion,
 };

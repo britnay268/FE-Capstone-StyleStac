@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import HairstyleCard from '../components/HairstyleCard';
 import { getPublicHairstyle } from '../api/mergedData';
 import SearchBar from '../components/SearchBar';
-import HairstyleTypeFilter from '../components/HairstyleTypeFilter';
+import HairstyleFilter from '../components/HairstyleFilter';
+import { getHairstylesbyOccasion, getHairstylesbyType } from '../api/HairstyleData';
 
 export default function ShowAllHairstlyes() {
   const [hairstyles, setHairstyles] = useState();
@@ -28,10 +29,18 @@ export default function ShowAllHairstlyes() {
     }
   };
 
+  const getFilteredHairstyleType = (fbKey) => {
+    getHairstylesbyType(fbKey).then(setSearchResults);
+  };
+
+  const getFilteredHairstyleOccasion = (fbKey) => {
+    getHairstylesbyOccasion(fbKey).then(setSearchResults);
+  };
+
   return (
     <>
       <SearchBar onSearch={searchItems} />
-      <HairstyleTypeFilter />
+      <HairstyleFilter filterTypeFunction={getFilteredHairstyleType} filterOccasionFunction={getFilteredHairstyleOccasion} filterAll={getAllTheHairstyles} />
       <div className="hairstyle-page">
         {searchResults?.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>You Have No Hairstyles</h1> : searchResults?.map((hairstyleObject) => (
           <HairstyleCard key={hairstyleObject.firebaseKey} hairstyleObj={hairstyleObject} onUpdate={getAllTheHairstyles} />
