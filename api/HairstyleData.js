@@ -147,6 +147,44 @@ const getPublicHairstyleWithoutUid = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getHairstylesbyType = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyles.json?orderBy="type_id"&equalTo="${firebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const publicHairstyle = Object.values(data).filter((obj) => obj.public);
+        resolve(publicHairstyle);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+const getHairstylesbyOccasion = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/hairstyles.json?orderBy="occasion_id"&equalTo="${firebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const publicHairstyle = Object.values(data).filter((obj) => obj.public);
+        resolve(publicHairstyle);
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 export {
-  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle, getPublicHairstyleWithUid, getPublicHairstyleWithoutUid,
+  getAllHairstyles, getHairstylesByUid, getSingleHairstyle, createHairstyle, updateHairstyle, deleteHairstyle, favoriteHairstyle, getPublicHairstyleWithUid, getPublicHairstyleWithoutUid, getHairstylesbyType, getHairstylesbyOccasion,
 };

@@ -35,7 +35,7 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
   useEffect(() => {
     const { firebaseKey } = hairstyleObj;
     getAllHairstyleInfo(firebaseKey).then(setHairstyle);
-  }, []);
+  }, [hairstyleObj]);
 
   return (
     <Card className="hairstyle-card">
