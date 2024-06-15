@@ -1,15 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { CiSquarePlus } from 'react-icons/ci';
+import { Button } from 'react-bootstrap';
 import { getAllHairstyleInfo } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
+// import { getReviewByHairstyle } from '../../api/ReviewData';
 
 export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
+  const [reviewClick, setReviewClick] = useState(false);
+  // const [reviews, setReviews] = useState();
 
   const router = useRouter();
 
   const { firebaseKey } = router.query;
+
+  // const getAllReviewsByHairstyle = () => {
+  //   getReviewByHairstyle(firebaseKey).then(setReviews);
+  // };
+
+  const handleReviewClick = () => {
+    setReviewClick(true);
+  };
 
   useEffect(() => {
     getAllHairstyleInfo(firebaseKey).then(setHairstyleDetails);
@@ -28,7 +41,8 @@ export default function HairstyleDetails() {
         </div>
       </div>
       <div className="review-section">
-        <ReviewForm />
+        <Button className="review-button" onClick={handleReviewClick}><CiSquarePlus /> Add Review</Button>
+        {reviewClick && <ReviewForm />}
       </div>
     </div>
   );
