@@ -1,15 +1,21 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import { FloatingLabel, Form, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
+import { useAuth } from '../../utils/context/authContext';
+import { createReview, updateReview } from '../../api/ReviewData';
 
 const initialState = {
   rating: 0,
   content: '',
 };
-export default function ReviewForm({ reviewObj }) {
+export default function ReviewForm({ reviewObj, onReviewSubmit, hideForm }) {
   const [formInput, setFormInput] = useState(reviewObj || initialState);
+  const { user } = useAuth();
+  const router = useRouter();
+  const { firebaseKey } = router.query;
+
   // const [starColor, setStarColor] = useState([...Array(5).fill('goldstar')]);
 
   // const toggleRating = (stars) => {
@@ -45,6 +51,21 @@ export default function ReviewForm({ reviewObj }) {
     }
   }, [reviewObj]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      ...formInput, uid: user.uid, hairstyle_id: firebaseKey, dateCreated: new Date().toISOString().split('T')[0],
+    };
+    createReview(payload).then(({ name }) => {
+      const patchPayload = { firebaseKey: name };
+      updateReview(patchPayload).then(() => {
+        router.push(`/hairstyle/${firebaseKey}`);
+      });
+      onReviewSubmit();
+      hideForm();
+    });
+  };
+
   return (
     <div>
       {/* <div className="formStars">
@@ -52,18 +73,20 @@ export default function ReviewForm({ reviewObj }) {
           <button type="button" className={`star ${e}`} key={i} onClick={() => toggleRating(i + 1)}>★</button>
         ))}
       </div> */}
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <FloatingLabel controlId="floatingTextarea2" label="Reviews">
           <Form.Control
             as="textarea"
             placeholder="Leave a comment here"
-            style={{ height: '150px', width: '49vw', borderRadius: '15px' }}
-            name="review"
-            value={formInput.review}
+            style={{ height: '150px', width: '47vw', borderRadius: '15px' }}
+            name="content"
+            value={formInput.content}
             onChange={handleChange}
           />
         </FloatingLabel>
-        <Button type="submit">{reviewObj.firebaseKey ? 'Update' : 'Submit'}</Button>
+        <div className="reviewForm-button">
+          <Button type="submit">{reviewObj.firebaseKey ? 'Update' : 'Submit'}</Button>
+        </div>
       </Form>
     </div>
   );
@@ -78,6 +101,8 @@ ReviewForm.propTypes = {
     uid: PropTypes.string,
     rating: PropTypes.number,
   }),
+  onReviewSubmit: PropTypes.func.isRequired,
+  hideForm: PropTypes.func.isRequired,
 };
 
 ReviewForm.defaultProps = {

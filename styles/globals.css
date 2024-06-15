@@ -261,7 +261,7 @@ Label {
   background-color: #B8A07F;
   padding: 20px;
   border-radius: 0.5rem;
-  width: 50rem;
+  width: 50vw;
 }
 
 .review-button {
@@ -279,4 +279,22 @@ Label {
 .star-ratings {
   display: flex;
   flex-direction: row;
+}
+
+.reviewForm-button {
+  margin-bottom: 10px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 0.05rem;
+
+  Button {
+    background-color: #42331A;
+    border: 1px solid #42331A;
+  }
+
+  Button:hover {
+    background-color: #42331A;
+    border: 1px solid #42331A;
+  }
 }

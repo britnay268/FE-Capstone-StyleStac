@@ -24,7 +24,7 @@ export default function HairstyleDetails() {
   };
 
   const handleReviewClick = () => {
-    setReviewClick(true);
+    setReviewClick(!reviewClick);
   };
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function HairstyleDetails() {
       </div>
       <div className="review-section">
         <Button className="review-button" onClick={handleReviewClick}><CiSquarePlus /> Add Review</Button>
-        {reviewClick && <ReviewForm />}
+        {reviewClick && <ReviewForm key={firebaseKey} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
         <div className="d-flex flex-wrap justify-content-between">
           {reviews.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>There are no Reviews</h1> : reviews.map((review) => (
             <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviewsByHairstyle} />
