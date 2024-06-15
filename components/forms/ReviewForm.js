@@ -57,7 +57,7 @@ export default function ReviewForm({ reviewObj }) {
           <Form.Control
             as="textarea"
             placeholder="Leave a comment here"
-            style={{ height: '150px', width: '50vw', borderRadius: '15px' }}
+            style={{ height: '150px', width: '49vw', borderRadius: '15px' }}
             name="review"
             value={formInput.review}
             onChange={handleChange}
