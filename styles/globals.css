@@ -33,6 +33,11 @@ h1, Form {
   justify-content: space-between;
 }
 
+.reviewCard {
+  display: flex;
+  justify-content: space-between;
+}
+
 
 svg {
   height: 2em;

@@ -53,17 +53,26 @@ export default function ReviewForm({ reviewObj, onReviewSubmit, hideForm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const payload = {
-      ...formInput, uid: user.uid, hairstyle_id: firebaseKey, dateCreated: new Date().toISOString().split('T')[0],
-    };
-    createReview(payload).then(({ name }) => {
-      const patchPayload = { firebaseKey: name };
-      updateReview(patchPayload).then(() => {
+    if (reviewObj.firebaseKey) {
+      const updatePayload = { ...formInput, dateCreated: new Date().toISOString().split('T')[0] };
+      updateReview(updatePayload).then(() => {
         router.push(`/hairstyle/${firebaseKey}`);
       });
       onReviewSubmit();
       hideForm();
-    });
+    } else {
+      const payload = {
+        ...formInput, uid: user.uid, hairstyle_id: firebaseKey, dateCreated: new Date().toISOString().split('T')[0],
+      };
+      createReview(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+        updateReview(patchPayload).then(() => {
+          router.push(`/hairstyle/${firebaseKey}`);
+        });
+        onReviewSubmit();
+        hideForm();
+      });
+    }
   };
 
   return (

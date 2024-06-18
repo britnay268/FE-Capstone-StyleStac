@@ -13,7 +13,15 @@ export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
   const [reviewClick, setReviewClick] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [selectedReview, setSelectedReview] = useState([]);
+  const [reviewEditClick, setReviewEditClick] = useState(false);
 
+  const handleReviewEdit = (reviewObj) => {
+    // Shows data for selected comment you press the edit button on.
+    console.warn('Review edit requested for:', reviewObj);
+    setSelectedReview(reviewObj);
+    setReviewEditClick(true);
+  };
   const router = useRouter();
 
   const { firebaseKey } = router.query;
@@ -49,10 +57,13 @@ export default function HairstyleDetails() {
       </div>
       <div className="review-section">
         <Button className="review-button" onClick={handleReviewClick}><CiSquarePlus /> Add Review</Button>
+        {/* This where the edit review form appears when you click the edit button on a review and once update is pressed the form is closed and the update is shown */}
+        {reviewEditClick && <ReviewForm reviewObj={selectedReview} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewEditClick(false)} /> }
+
         {reviewClick && <ReviewForm key={firebaseKey} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
         <div className="d-flex flex-wrap justify-content-between">
           {reviews.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>There are no Reviews</h1> : reviews.map((review) => (
-            <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviewsByHairstyle} />
+            <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviewsByHairstyle} reviewEdit={handleReviewEdit} />
           ))}
         </div>
       </div>
