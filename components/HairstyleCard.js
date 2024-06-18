@@ -10,11 +10,15 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { TbListDetails } from 'react-icons/tb';
 import { getAllHairstyleInfo } from '../api/mergedData';
-import { deleteHairstyle, updateHairstyle } from '../api/HairstyleData';
+import {
+  createHairstyle, deleteHairstyle, getHairstylesByUid, updateHairstyle,
+} from '../api/HairstyleData';
+import { useAuth } from '../utils/context/authContext';
 
 export default function HairstyleCard({ hairstyleObj, onUpdate }) {
   const [hairstyle, setHairstyle] = useState([]);
   const router = useRouter();
+  const { user } = useAuth();
 
   const [isFavorite, setIsFavorite] = useState(hairstyleObj.favorite);
 
@@ -32,6 +36,26 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
     setIsFavorite(newFavoriteState);
   };
 
+  const toggleNotYourFavorite = async () => {
+    const userHairstyles = await getHairstylesByUid(user.uid);
+
+    // This checks to see if the hairstyle name already exists in the users hairstyle and if it does, it will let the user know and will not create a copy of hairstyle.
+    const existingFavorite = userHairstyles.find((hs) => hs.name === hairstyleObj.name);
+    if (existingFavorite) {
+      alert('This hairstyle already exists in your favorites!');
+      return;
+    }
+
+    createHairstyle({
+      ...hairstyleObj, favorite: true, uid: user.uid, copy: true,
+    }).then(({ name }) => {
+      const patchPayload = { firebaseKey: name };
+      updateHairstyle(patchPayload).then(() => {
+        router.push('/myhairstyles');
+      });
+    });
+  };
+
   useEffect(() => {
     const { firebaseKey } = hairstyleObj;
     getAllHairstyleInfo(firebaseKey).then(setHairstyle);
@@ -44,6 +68,8 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
         <div className="favorite_position">
           <Card.Title style={{ marginBottom: '16px' }}>{hairstyleObj.name}</Card.Title>
           {router.asPath !== '/hairstyles' && <Button onClick={toggleFavorite} className="favorite">{isFavorite ? <FaStar className="star" /> : <FaRegStar className="star" />}</Button>}
+
+          {router.asPath === '/hairstyles' && <Button onClick={toggleNotYourFavorite} className="favorite">{isFavorite && (hairstyleObj.uid === user.uid && hairstyleObj.uid !== user.uid) ? <FaStar className="star" /> : <FaRegStar className="star" />}</Button>}
         </div>
         <p style={{ marginBottom: '8px' }}><strong>Type:</strong> {hairstyle.type?.name}</p>
         <p><strong>Occasion:</strong> {hairstyle.occasion?.name}</p>

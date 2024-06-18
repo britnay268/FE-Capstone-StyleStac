@@ -15,7 +15,12 @@ const getPublicHairstyle = async (uid) => {
   const hairstyleWithUid = await getPublicHairstyleWithUid(uid);
 
   // console.warn([...hairstyleWithoutUid, ...hairstyleWithUid]);
-  return [...hairstyleWithUid, ...hairstyleWithoutUid];
+  // return [...hairstyleWithUid, ...hairstyleWithoutUid];
+  const combinedHairstyles = [...hairstyleWithUid, ...hairstyleWithoutUid];
+
+  const filteredHairstyles = combinedHairstyles.filter((hairstyle) => !hairstyle.copy);
+
+  return filteredHairstyles;
 };
 
 export { getAllHairstyleInfo, getPublicHairstyle };
