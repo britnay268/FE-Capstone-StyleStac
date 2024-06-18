@@ -106,9 +106,10 @@ svg {
 }
 
 .favorite {
-  background-color: #42331A;
+  background-color: transparent;
   border: none;
   padding: 0px 5px;
+  margin: 5px;
 }
 
 .favorite:hover {
@@ -117,6 +118,8 @@ svg {
 
 .star {
   color: gold;
+  height: 20px;
+  width: 20px;
 }
 
 .hairstyle-button {

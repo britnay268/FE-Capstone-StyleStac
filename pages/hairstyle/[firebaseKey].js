@@ -6,7 +6,7 @@ import { CiSquarePlus } from 'react-icons/ci';
 import { Button } from 'react-bootstrap';
 import { getAllHairstyleInfo } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
-import { getReviewByHairstyle } from '../../api/ReviewData';
+import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
 import ReviewCard from '../../components/ReviewCard';
 
 export default function HairstyleDetails() {
@@ -15,13 +15,6 @@ export default function HairstyleDetails() {
   const [reviews, setReviews] = useState([]);
   const [selectedReview, setSelectedReview] = useState([]);
   const [reviewEditClick, setReviewEditClick] = useState(false);
-
-  const handleReviewEdit = (reviewObj) => {
-    // Shows data for selected comment you press the edit button on.
-    console.warn('Review edit requested for:', reviewObj);
-    setSelectedReview(reviewObj);
-    setReviewEditClick(true);
-  };
   const router = useRouter();
 
   const { firebaseKey } = router.query;
@@ -31,13 +24,26 @@ export default function HairstyleDetails() {
     // console.warn(reviews);
   };
 
-  const handleReviewClick = () => {
-    setReviewClick(!reviewClick);
-  };
-
   useEffect(() => {
     getAllHairstyleInfo(firebaseKey).then(setHairstyleDetails);
   }, [firebaseKey]);
+
+  const handleReviewEdit = (reviewObj) => {
+    // Shows data for selected comment you press the edit button on.
+    // console.warn('Review edit requested for:', reviewObj);
+    setSelectedReview(reviewObj);
+    setReviewEditClick(true);
+  };
+
+  const handleReviewDelete = (reviewObj) => {
+    if (window.confirm('Sure you want to delete your review?')) {
+      deleteReview(reviewObj.firebaseKey).then(() => getAllReviewsByHairstyle());
+    }
+  };
+
+  const handleReviewClick = () => {
+    setReviewClick(!reviewClick);
+  };
 
   useEffect(() => {
     getAllReviewsByHairstyle();
@@ -57,13 +63,15 @@ export default function HairstyleDetails() {
       </div>
       <div className="review-section">
         <Button className="review-button" onClick={handleReviewClick}><CiSquarePlus /> Add Review</Button>
-        {/* This where the edit review form appears when you click the edit button on a review and once update is pressed the form is closed and the update is shown */}
+        {/* This is where the edit review form appears when you click the edit button on a review and once update is pressed the form is closed and the update is shown */}
         {reviewEditClick && <ReviewForm reviewObj={selectedReview} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewEditClick(false)} /> }
 
-        {reviewClick && <ReviewForm key={firebaseKey} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
+        {/* This where the review form appears when you click the add review button and once submit is pressed the form is closed and a card appears for the review */}
+        {reviewClick && <ReviewForm onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
+
         <div className="d-flex flex-wrap justify-content-between">
           {reviews.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>There are no Reviews</h1> : reviews.map((review) => (
-            <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviewsByHairstyle} reviewEdit={handleReviewEdit} />
+            <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviewsByHairstyle} reviewEdit={handleReviewEdit} reviewDelete={handleReviewDelete} />
           ))}
         </div>
       </div>

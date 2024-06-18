@@ -6,12 +6,17 @@ import { BiSolidPencil } from 'react-icons/bi';
 import { MdDeleteForever } from 'react-icons/md';
 import { useAuth } from '../utils/context/authContext';
 
-export default function ReviewCard({ reviewObj, reviewEdit }) {
+export default function ReviewCard({ reviewObj, reviewEdit, reviewDelete }) {
   const { user } = useAuth();
 
   const handleEdit = () => {
     reviewEdit(reviewObj);
-    console.warn(reviewObj.firebaseKey);
+    // console.warn(reviewObj.firebaseKey);
+  };
+
+  const handleDelete = () => {
+    reviewDelete(reviewObj);
+    // console.warn(reviewObj.firebaseKey);
   };
 
   return (
@@ -22,7 +27,7 @@ export default function ReviewCard({ reviewObj, reviewEdit }) {
             <Card.Title>Anonymous User</Card.Title>
             <div style={{ display: 'flex', gap: '-20px' }}>
               {reviewObj.uid === user.uid ? <Button style={{ backgroundColor: 'transparent', border: 'none', padding: '6px 6px' }} onClick={handleEdit}><BiSolidPencil style={{ height: '15px', width: '15px', color: 'black' }} /></Button> : ''}
-              {reviewObj.uid === user.uid ? <Button style={{ backgroundColor: 'transparent', border: 'none', padding: '6px 6px' }}><MdDeleteForever style={{ height: '15px', width: '15px', color: 'black' }} /></Button> : ''}
+              {reviewObj.uid === user.uid ? <Button style={{ backgroundColor: 'transparent', border: 'none', padding: '6px 6px' }} onClick={handleDelete}><MdDeleteForever style={{ height: '15px', width: '15px', color: 'black' }} /></Button> : ''}
             </div>
           </div>
           <Card.Subtitle className="mb-2 text-muted">@anonuser</Card.Subtitle>
@@ -47,4 +52,5 @@ ReviewCard.propTypes = {
     rating: PropTypes.number,
   }).isRequired,
   reviewEdit: PropTypes.func.isRequired,
+  reviewDelete: PropTypes.func.isRequired,
 };
