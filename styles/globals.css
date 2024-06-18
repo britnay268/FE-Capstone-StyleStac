@@ -33,6 +33,11 @@ h1, Form {
   justify-content: space-between;
 }
 
+.reviewCard {
+  display: flex;
+  justify-content: space-between;
+}
+
 
 svg {
   height: 2em;
@@ -68,7 +73,7 @@ svg {
   padding-right: 20px;
   margin-right: 80px;
   width: fit-content;
-  height: 100vh; 
+  height: fit-content;
 }
 
 .hairstyle-image {
@@ -101,9 +106,10 @@ svg {
 }
 
 .favorite {
-  background-color: #42331A;
+  background-color: transparent;
   border: none;
   padding: 0px 5px;
+  margin: 5px;
 }
 
 .favorite:hover {
@@ -112,6 +118,8 @@ svg {
 
 .star {
   color: gold;
+  height: 20px;
+  width: 20px;
 }
 
 .hairstyle-button {
@@ -247,5 +255,54 @@ Label {
     background-color: #42331A;
     border: 1px solid #42331A;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.detail-layout {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+}
+
+.review-section {
+  border: 1px solid #B8A07F;
+  background-color: #B8A07F;
+  padding: 20px;
+  border-radius: 0.5rem;
+  width: 50vw;
+}
+
+.review-button {
+  padding: 0px 8px 0px 5px; 
+  background-color: transparent; 
+  border: none; 
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.review-button:hover {
+  background-color: #42331A;
+}
+
+.star-ratings {
+  display: flex;
+  flex-direction: row;
+}
+
+.reviewForm-button {
+  margin-bottom: 10px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 0.05rem;
+
+  Button {
+    background-color: #42331A;
+    border: 1px solid #42331A;
+  }
+
+  Button:hover {
+    background-color: #42331A;
+    border: 1px solid #42331A;
   }
 }

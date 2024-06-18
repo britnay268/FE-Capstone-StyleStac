@@ -4,8 +4,8 @@ import { getSingleHairstyleType } from './HairstyleTypeData';
 
 const getAllHairstyleInfo = async (hairstyleFirebaseKey) => {
   const hairstyle = await getSingleHairstyle(hairstyleFirebaseKey);
-  const type = await getSingleHairstyleType(hairstyle.type_id);
-  const occasion = await getSingleHairstyleOccasion(hairstyle.occasion_id);
+  const type = await getSingleHairstyleType(hairstyle?.type_id);
+  const occasion = await getSingleHairstyleOccasion(hairstyle?.occasion_id);
 
   return { ...hairstyle, type, occasion };
 };
