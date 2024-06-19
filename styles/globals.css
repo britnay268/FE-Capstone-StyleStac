@@ -306,3 +306,22 @@ Label {
     border: 1px solid #42331A;
   }
 }
+
+.stylistBtn {
+  background-color: transparent;
+  border: none;
+  padding: 0px;
+  margin-bottom: 16px;
+  color: whitesmoke;
+}
+
+.stylist-button {
+  background-color: #42331A;
+  border: none;
+  border-radius: 20pc;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: #B8A07F;
+  display: flex;
+  justify-content: center;
+}

@@ -8,6 +8,8 @@ import { getAllHairstyleInfo } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
 import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
 import ReviewCard from '../../components/ReviewCard';
+import StylistForm from '../../components/forms/StylistForm';
+import { getStylists } from '../../api/StylistData';
 
 export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
@@ -21,6 +23,11 @@ export default function HairstyleDetails() {
 
   const getAllReviewsByHairstyle = async () => {
     await getReviewByHairstyle(firebaseKey).then(setReviews);
+    // console.warn(reviews);
+  };
+
+  const getAllStylists = async () => {
+    await getStylists().then(console.warn);
     // console.warn(reviews);
   };
 
@@ -47,6 +54,7 @@ export default function HairstyleDetails() {
 
   useEffect(() => {
     getAllReviewsByHairstyle();
+    getAllStylists();
   }, []);
 
   return (
@@ -57,6 +65,7 @@ export default function HairstyleDetails() {
         <div style={{ color: 'white' }}>
           <p>Date Done: {hairstyleDetails.date_done}</p>
           <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
+          <StylistForm stylistObj={getAllStylists} />
           <p>Type: {hairstyleDetails.type?.name}</p>
           <p>Occasion: {hairstyleDetails.occasion?.name}</p>
         </div>
