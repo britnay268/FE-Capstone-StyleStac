@@ -1,6 +1,7 @@
 import { getPublicHairstyleWithUid, getPublicHairstyleWithoutUid, getSingleHairstyle } from './HairstyleData';
 import { getSingleHairstyleOccasion } from './HairstyleOccasionData';
 import { getSingleHairstyleType } from './HairstyleTypeData';
+import { getStylists } from './StylistData';
 
 const getAllHairstyleInfo = async (hairstyleFirebaseKey) => {
   const hairstyle = await getSingleHairstyle(hairstyleFirebaseKey);
@@ -23,4 +24,14 @@ const getPublicHairstyle = async (uid) => {
   return filteredHairstyles;
 };
 
-export { getAllHairstyleInfo, getPublicHairstyle };
+const getHairstyleAndStylist = async (hsFirebaseKey) => {
+  const hairstyle = await getSingleHairstyle(hsFirebaseKey);
+
+  const stylists = await getStylists();
+
+  const singleStylist = await stylists.find((stylist) => stylist.firebaseKey === hairstyle.stylist_id);
+
+  return { ...hairstyle, singleStylist };
+};
+
+export { getAllHairstyleInfo, getPublicHairstyle, getHairstyleAndStylist };

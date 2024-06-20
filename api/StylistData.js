@@ -46,4 +46,20 @@ const updateStylist = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { createStylist, updateStylist, getStylists };
+const getSingleStylist = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/stylists/${firebaseKey}.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      resolve(data);
+    })
+    .catch(reject);
+});
+
+export {
+  createStylist, updateStylist, getStylists, getSingleStylist,
+};

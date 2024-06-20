@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { CiSquarePlus } from 'react-icons/ci';
 import { Button } from 'react-bootstrap';
-import { getAllHairstyleInfo } from '../../api/mergedData';
+import { getAllHairstyleInfo, getHairstyleAndStylist } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
 import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
 import ReviewCard from '../../components/ReviewCard';
 import StylistForm from '../../components/forms/StylistForm';
-import { getStylists } from '../../api/StylistData';
+import { getSingleHairstyle, updateHairstyle } from '../../api/HairstyleData';
 
 export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
@@ -18,16 +18,12 @@ export default function HairstyleDetails() {
   const [selectedReview, setSelectedReview] = useState([]);
   const [reviewEditClick, setReviewEditClick] = useState(false);
   const router = useRouter();
+  const [hairstyleAndStylist, setHairstyleAndStylist] = useState([]);
 
   const { firebaseKey } = router.query;
 
   const getAllReviewsByHairstyle = async () => {
     await getReviewByHairstyle(firebaseKey).then(setReviews);
-    // console.warn(reviews);
-  };
-
-  const getAllStylists = async () => {
-    await getStylists().then(console.warn);
     // console.warn(reviews);
   };
 
@@ -48,14 +44,23 @@ export default function HairstyleDetails() {
     }
   };
 
+  const updateTheHairstyle = async (stylistObj) => {
+    const getTheSingleHairstyle = await getSingleHairstyle(firebaseKey);
+    await updateHairstyle({ ...getTheSingleHairstyle, stylist_id: stylistObj.firebaseKey });
+  };
+
   const handleReviewClick = () => {
     setReviewClick(!reviewClick);
   };
+  useEffect(() => {
+    getAllReviewsByHairstyle();
+  }, []);
 
   useEffect(() => {
     getAllReviewsByHairstyle();
-    getAllStylists();
-  }, []);
+    getHairstyleAndStylist(firebaseKey).then(setHairstyleAndStylist);
+    // console.warn(hairstyleAndStylist.singleStylist?.name);
+  }, [firebaseKey]);
 
   return (
     <div className="detail-layout">
@@ -65,7 +70,9 @@ export default function HairstyleDetails() {
         <div style={{ color: 'white' }}>
           <p>Date Done: {hairstyleDetails.date_done}</p>
           <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
-          <StylistForm stylistObj={getAllStylists} />
+
+          {hairstyleDetails.stylist_id === '' ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} /> : <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>}
+
           <p>Type: {hairstyleDetails.type?.name}</p>
           <p>Occasion: {hairstyleDetails.occasion?.name}</p>
         </div>

@@ -4,9 +4,8 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { IoMdAdd } from 'react-icons/io';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { createStylist, updateStylist } from '../../api/StylistData';
-import { updateHairstyle } from '../../api/HairstyleData';
 
 const initialState = {
   name: '',
@@ -14,11 +13,11 @@ const initialState = {
   booking_site: '',
 };
 
-export default function StylistForm({ stylistObj }) {
+export default function StylistForm({ stylistObj, onUpdate }) {
   const [show, setShow] = useState(false);
   const [formInput, setFormInput] = useState(initialState);
-  const router = useRouter();
-  const { firebaseKey } = router.query;
+  // const router = useRouter();
+  // const { firebaseKey } = router.query;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,14 +33,13 @@ export default function StylistForm({ stylistObj }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await createStylist({ ...formInput }).then(({ name }) => {
+    await createStylist({ ...formInput }).then(async ({ name }) => {
       const patchPayload = { firebaseKey: name };
-      updateStylist(patchPayload).then(() => {
-        const payload = { stylist_id: stylistObj.firebaseKey };
-        updateHairstyle(payload).then(() => router.push(`/hairstyle/${firebaseKey}`));
+      await updateStylist(patchPayload).then(() => {
+        onUpdate({ ...formInput, firebaseKey: name }).then();
       });
+      // window.location.reload();
     });
-    // await updateHairstyle({ stylist_id: stylistObj.firebaseKey });
   };
 
   useEffect(() => {
@@ -79,7 +77,7 @@ export default function StylistForm({ stylistObj }) {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Enter Stylist Booking Site</Form.Label>
+            <Form.Label>Enter Stylist Imstagram Link</Form.Label>
             <Form.Control
               type="link"
               placeholder="Instagram Link..."
@@ -100,10 +98,12 @@ StylistForm.propTypes = {
     name: PropTypes.string,
     firebaseKey: PropTypes.string,
     booking_site: PropTypes.string,
-    instagram_link: PropTypes.number,
+    instagram_link: PropTypes.string,
   }),
+  onUpdate: PropTypes.func,
 };
 
 StylistForm.defaultProps = {
   stylistObj: initialState,
+  onUpdate: () => {},
 };
