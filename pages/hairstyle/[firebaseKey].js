@@ -53,6 +53,7 @@ export default function HairstyleDetails() {
   const handleReviewClick = () => {
     setReviewClick(!reviewClick);
   };
+
   useEffect(() => {
     getAllReviewsByHairstyle();
   }, []);
