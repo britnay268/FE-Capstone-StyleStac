@@ -2,8 +2,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { CiSquarePlus } from 'react-icons/ci';
+import { CiSquarePlus, CiCalendar } from 'react-icons/ci';
 import { Button } from 'react-bootstrap';
+import { FaInstagram } from 'react-icons/fa';
+import Link from 'next/link';
 import { getAllHairstyleInfo, getHairstyleAndStylist } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
 import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
@@ -71,7 +73,22 @@ export default function HairstyleDetails() {
           <p>Date Done: {hairstyleDetails.date_done}</p>
           <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
 
-          {hairstyleDetails.stylist_id === '' ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} /> : <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>}
+          {hairstyleDetails.stylist_id === '' ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} />
+            : (
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
+                {hairstyleAndStylist.singleStylist && (
+                  <div>
+                    <Link passHref href={hairstyleAndStylist.singleStylist.instagram_link} target="_blank" rel="noopener noreferrer">
+                      <FaInstagram className="stylistLinks" />
+                    </Link>
+                    <Link passHref href={hairstyleAndStylist.singleStylist.booking_site}>
+                      <CiCalendar className="stylistLinks" />
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
 
           <p>Type: {hairstyleDetails.type?.name}</p>
           <p>Occasion: {hairstyleDetails.occasion?.name}</p>

@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { IoMdAdd } from 'react-icons/io';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { createStylist, updateStylist } from '../../api/StylistData';
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
 export default function StylistForm({ stylistObj, onUpdate }) {
   const [show, setShow] = useState(false);
   const [formInput, setFormInput] = useState(initialState);
-  // const router = useRouter();
+  const router = useRouter();
   // const { firebaseKey } = router.query;
 
   const handleClose = () => setShow(false);
@@ -36,9 +36,8 @@ export default function StylistForm({ stylistObj, onUpdate }) {
     await createStylist({ ...formInput }).then(async ({ name }) => {
       const patchPayload = { firebaseKey: name };
       await updateStylist(patchPayload).then(() => {
-        onUpdate({ ...formInput, firebaseKey: name }).then();
+        onUpdate({ ...formInput, firebaseKey: name }).then(() => router.reload());
       });
-      // window.location.reload();
     });
   };
 
