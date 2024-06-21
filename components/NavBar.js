@@ -34,19 +34,19 @@ export default function NavBar() {
           </div>
           <div className={collapsed ? 'sidebar' : 'closed'}>
             <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Home</Nav.Link>
             </Link>
             <Link passHref href="/hairstyles">
-              <Nav.Link>All Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>All Hairstyles</Nav.Link>
             </Link>
             <Link passHref href="/myhairstyles">
-              <Nav.Link>My Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>My Hairstyles</Nav.Link>
             </Link>
             <Link passHref href="/hairstyle/new">
-              <Nav.Link>Create Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Create Hairstyles</Nav.Link>
             </Link>
             <Link passHref href="/favoriteHairstyle">
-              <Nav.Link>Favorite Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Favorite Hairstyles</Nav.Link>
             </Link>
             <hr style={{ padding: '0px 8px' }} />
             <Nav.Link />
