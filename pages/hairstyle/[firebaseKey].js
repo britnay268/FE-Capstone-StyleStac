@@ -2,10 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { CiSquarePlus, CiCalendar } from 'react-icons/ci';
+import { CiSquarePlus } from 'react-icons/ci';
 import { Button } from 'react-bootstrap';
-import { FaInstagram } from 'react-icons/fa';
-import Link from 'next/link';
+import { FaCalendar, FaSquareInstagram } from 'react-icons/fa6';
 import { getAllHairstyleInfo, getHairstyleAndStylist } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
 import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
@@ -67,10 +66,10 @@ export default function HairstyleDetails() {
   return (
     <div className="detail-layout">
       <div className="details">
-        <h3 style={{ color: 'white', marginTop: '10px' }}>{hairstyleDetails.name}</h3>
+        <h3 style={{ color: '#42331A', marginTop: '10px' }}>{hairstyleDetails.name}</h3>
         <img src={hairstyleDetails.image} alt={hairstyleDetails.name} style={{ width: '300px', borderRadius: '10px' }} />
-        <div style={{ color: 'white' }}>
-          <p>Date Done: {hairstyleDetails.date_done}</p>
+        <div style={{ color: '#42331A' }}>
+          <p style={{ marginTop: '10px' }}>Date Done: {hairstyleDetails.date_done}</p>
           <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
 
           {hairstyleDetails.stylist_id === '' ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} />
@@ -79,12 +78,12 @@ export default function HairstyleDetails() {
                 <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
                 {hairstyleAndStylist.singleStylist && (
                   <div>
-                    <Link passHref href={hairstyleAndStylist.singleStylist.instagram_link} target="_blank" rel="noopener noreferrer">
-                      <FaInstagram className="stylistLinks" />
-                    </Link>
-                    <Link passHref href={hairstyleAndStylist.singleStylist.booking_site}>
-                      <CiCalendar className="stylistLinks" />
-                    </Link>
+                    <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.instagram_link)}>
+                      <FaSquareInstagram className="stylistIGLinks" />
+                    </Button>
+                    <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.booking_site)}>
+                      <FaCalendar className="stylistCalendarLinks" />
+                    </Button>
                   </div>
                 )}
               </div>

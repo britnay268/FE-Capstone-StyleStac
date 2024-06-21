@@ -278,6 +278,7 @@ Label {
   border: none; 
   margin-bottom: 5px;
   text-align: center;
+  color: #42331A;
 }
 
 .review-button:hover {
@@ -325,9 +326,30 @@ Label {
 
 }
 
-.stylistLinks {
-  height: 20px; 
-  width: 20px;
+.stylistCalendarLinks {
+  height: 21px; 
+  width: 21px;
+  margin-left: 0px; 
+  padding-bottom: 6px;
+}
+
+.stylistIGLinks {
+  height: 23px; 
+  width: 23px;
   margin-left: 3px; 
   padding-bottom: 5px;
+}
+
+.stylistlinkbtn {
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  color: #42331A;
+}
+
+.stylistlinkbtn:hover {
+  background-color: transparent;
+  padding: 0px;
+  border: none;
+  color: #42331A;
 }
