@@ -2,12 +2,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { CiSquarePlus } from 'react-icons/ci';
+import { CiSquarePlus, CiCalendar } from 'react-icons/ci';
 import { Button } from 'react-bootstrap';
-import { getAllHairstyleInfo } from '../../api/mergedData';
+import { FaInstagram } from 'react-icons/fa';
+import Link from 'next/link';
+import { getAllHairstyleInfo, getHairstyleAndStylist } from '../../api/mergedData';
 import ReviewForm from '../../components/forms/ReviewForm';
 import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
 import ReviewCard from '../../components/ReviewCard';
+import StylistForm from '../../components/forms/StylistForm';
+import { getSingleHairstyle, updateHairstyle } from '../../api/HairstyleData';
 
 export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
@@ -16,6 +20,7 @@ export default function HairstyleDetails() {
   const [selectedReview, setSelectedReview] = useState([]);
   const [reviewEditClick, setReviewEditClick] = useState(false);
   const router = useRouter();
+  const [hairstyleAndStylist, setHairstyleAndStylist] = useState([]);
 
   const { firebaseKey } = router.query;
 
@@ -41,13 +46,23 @@ export default function HairstyleDetails() {
     }
   };
 
+  const updateTheHairstyle = async (stylistObj) => {
+    const getTheSingleHairstyle = await getSingleHairstyle(firebaseKey);
+    await updateHairstyle({ ...getTheSingleHairstyle, stylist_id: stylistObj.firebaseKey });
+  };
+
   const handleReviewClick = () => {
     setReviewClick(!reviewClick);
   };
-
   useEffect(() => {
     getAllReviewsByHairstyle();
   }, []);
+
+  useEffect(() => {
+    getAllReviewsByHairstyle();
+    getHairstyleAndStylist(firebaseKey).then(setHairstyleAndStylist);
+    // console.warn(hairstyleAndStylist.singleStylist?.name);
+  }, [firebaseKey]);
 
   return (
     <div className="detail-layout">
@@ -57,6 +72,24 @@ export default function HairstyleDetails() {
         <div style={{ color: 'white' }}>
           <p>Date Done: {hairstyleDetails.date_done}</p>
           <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
+
+          {hairstyleDetails.stylist_id === '' ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} />
+            : (
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
+                {hairstyleAndStylist.singleStylist && (
+                  <div>
+                    <Link passHref href={hairstyleAndStylist.singleStylist.instagram_link} target="_blank" rel="noopener noreferrer">
+                      <FaInstagram className="stylistLinks" />
+                    </Link>
+                    <Link passHref href={hairstyleAndStylist.singleStylist.booking_site}>
+                      <CiCalendar className="stylistLinks" />
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+
           <p>Type: {hairstyleDetails.type?.name}</p>
           <p>Occasion: {hairstyleDetails.occasion?.name}</p>
         </div>
