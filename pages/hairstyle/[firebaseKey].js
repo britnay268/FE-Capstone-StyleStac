@@ -17,7 +17,7 @@ export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
   const [reviewClick, setReviewClick] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [selectedReview, setSelectedReview] = useState([]);
+  const [selectedReview, setSelectedReview] = useState({});
   const [reviewEditClick, setReviewEditClick] = useState(false);
   const router = useRouter();
   const [hairstyleAndStylist, setHairstyleAndStylist] = useState([]);
@@ -61,7 +61,6 @@ export default function HairstyleDetails() {
   }, []);
 
   useEffect(() => {
-    getAllReviewsByHairstyle();
     getHairstyleAndStylist(firebaseKey).then(setHairstyleAndStylist);
     // console.warn(hairstyleAndStylist.singleStylist?.name);
   }, [firebaseKey]);
@@ -81,12 +80,17 @@ export default function HairstyleDetails() {
                 {hairstyleAndStylist.singleStylist && (
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
-                    <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.instagram_link)}>
-                      <FaSquareInstagram className="stylistIGLinks" />
-                    </Button>
-                    <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.booking_site)}>
-                      <FaCalendar className="stylistCalendarLinks" />
-                    </Button>
+                    {hairstyleAndStylist.singleStylist.instagram_link ? (
+                      <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.instagram_link)}>
+                        <FaSquareInstagram className="stylistIGLinks" />
+                      </Button>
+                    ) : ''}
+                    {hairstyleAndStylist.singleStylist.booking_site ? (
+                      <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.booking_site)}>
+                        <FaCalendar className="stylistCalendarLinks" />
+                      </Button>
+                    ) : ''}
+
                   </div>
                 )}
               </div>
@@ -99,10 +103,9 @@ export default function HairstyleDetails() {
       <div className="review-section">
         <Button className="review-button" onClick={handleReviewClick}><CiSquarePlus /> Add Review</Button>
         {/* This is where the edit review form appears when you click the edit button on a review and once update is pressed the form is closed and the update is shown */}
-        {reviewEditClick && <ReviewForm reviewObj={selectedReview} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewEditClick(false)} /> }
 
         {/* This where the review form appears when you click the add review button and once submit is pressed the form is closed and a card appears for the review */}
-        {reviewClick && <ReviewForm onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
+        {reviewClick && <ReviewForm key={firebaseKey} reviewObj={selectedReview} onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
 
         <div className="d-flex flex-wrap justify-content-between">
           {reviews.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>There are no reviews</h1> : reviews.map((review) => (

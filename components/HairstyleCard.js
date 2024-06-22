@@ -77,17 +77,19 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
         </div>
         <p style={{ marginBottom: '8px' }}><strong>Type:</strong> {hairstyle.type?.name}</p>
         <p><strong>Occasion:</strong> {hairstyle.occasion?.name}</p>
-        <Link href={`/hairstyle/${hairstyleObj.firebaseKey}`} passHref>
-          <Button variant="warning" className="hairstyle-button"><TbListDetails /></Button>
-        </Link>
-        {router.asPath !== '/hairstyles' && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Link href={`/hairstyle/${hairstyleObj.firebaseKey}`} passHref>
+            <Button variant="link" className="hairstyle-button"><TbListDetails /></Button>
+          </Link>
+          {router.asPath !== '/hairstyles' && (
           <>
             <Link href={`/hairstyle/edit/${hairstyleObj.firebaseKey}`} passHref>
-              <Button variant="success" className="hairstyle-editbutton"><RiEditLine /></Button>
+              <Button variant="link" className="hairstyle-editbutton"><RiEditLine /></Button>
             </Link>
-            <Button variant="danger" className="hairstyle-button" onClick={deleteTheHairstyle}><MdDeleteForever /></Button>
+            <Button variant="link" className="hairstyle-button" onClick={deleteTheHairstyle}><MdDeleteForever /></Button>
           </>
-        )}
+          )}
+        </div>
       </Card.Body>
     </Card>
   );

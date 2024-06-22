@@ -10,32 +10,13 @@ const initialState = {
   rating: 0,
   content: '',
 };
-export default function ReviewForm({ reviewObj, onReviewSubmit, hideForm }) {
+export default function ReviewForm({
+  reviewObj, onReviewSubmit, hideForm,
+}) {
   const [formInput, setFormInput] = useState(reviewObj || initialState);
   const { user } = useAuth();
   const router = useRouter();
   const { firebaseKey } = router.query;
-
-  // const [starColor, setStarColor] = useState([...Array(5).fill('goldstar')]);
-
-  // const toggleRating = (stars) => {
-  //   if (stars === formInput.rating) {
-  //     setFormInput((prevState) => ({
-  //       ...prevState,
-  //       rating: 0,
-  //     }));
-  //   } else {
-  //     setFormInput((prevState) => ({
-  //       ...prevState,
-  //       rating: stars,
-  //     }));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const newColors = [...Array(5).fill('goldstar').fill('graystar', formInput.rating)];
-  //   setStarColor([...newColors]);
-  // }, [formInput.rating]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,33 +26,33 @@ export default function ReviewForm({ reviewObj, onReviewSubmit, hideForm }) {
     }));
   };
 
-  useEffect(() => {
-    if (reviewObj.firebaseKey) {
-      setFormInput(reviewObj);
-    }
-  }, [reviewObj]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (reviewObj.firebaseKey) {
       const updatePayload = { ...formInput, dateCreated: new Date().toISOString().split('T')[0] };
-      updateReview(updatePayload);
+      await updateReview(updatePayload).then(() => router.reload());
       onReviewSubmit();
       hideForm();
     } else {
       const payload = {
         ...formInput, uid: user.uid, hairstyle_id: firebaseKey, dateCreated: new Date().toISOString().split('T')[0],
       };
-      createReview(payload).then(({ name }) => {
+      await createReview(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateReview(patchPayload).then(() => {
           router.push(`/hairstyle/${firebaseKey}`);
         });
-        onReviewSubmit();
+        onReviewSubmit(formInput);
         hideForm();
       });
     }
   };
+
+  useEffect(() => {
+    if (reviewObj.firebaseKey) {
+      setFormInput(reviewObj);
+    }
+  }, [reviewObj]);
 
   return (
     <div>
@@ -92,7 +73,7 @@ export default function ReviewForm({ reviewObj, onReviewSubmit, hideForm }) {
           />
         </FloatingLabel>
         <div className="reviewForm-button">
-          <Button type="submit">{reviewObj.firebaseKey ? 'Update' : 'Submit'}</Button>
+          <Button type="submit">{reviewObj?.firebaseKey ? 'Update' : 'Submit'}</Button>
         </div>
       </Form>
     </div>

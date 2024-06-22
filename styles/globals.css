@@ -124,12 +124,16 @@ svg {
 .hairstyle-button {
   border-radius: 40px;
   padding: 0.5px 12px;
+  color: whitesmoke;
+  padding: 0px;
 }
 
 .hairstyle-editbutton {
   border-radius: 40px;
   padding: 0.5px 12px;
   margin: 0px 5px;
+  color: whitesmoke;
+  padding: 0px;
 }
 
 .form-background {

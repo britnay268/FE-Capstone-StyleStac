@@ -39,7 +39,7 @@ export default function NavBar() {
               <Nav.Link onClick={handleToggleSidebar}>Home</Nav.Link>
             </Link>
             <Link passHref href="/hairstyles">
-              <Nav.Link onClick={handleToggleSidebar}>Public Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Community Hairstyles</Nav.Link>
             </Link>
             <Link passHref href="/myhairstyles">
               <Nav.Link onClick={handleToggleSidebar}>My Hairstyles</Nav.Link>
