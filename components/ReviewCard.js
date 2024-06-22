@@ -31,10 +31,6 @@ export default function ReviewCard({ reviewObj, reviewEdit, reviewDelete }) {
             </div>
           </div>
           <Card.Subtitle className="mb-2 text-muted">@anonuser</Card.Subtitle>
-          <div className="star-ratings">
-            {/* Creates an empty array with the length equal to rating and iterates over the array of starts */}
-            {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star goldstar" key={i}>★</p>)}
-          </div>
           <Card.Text>{reviewObj.content}</Card.Text>
         </Card.Body>
       </Card>

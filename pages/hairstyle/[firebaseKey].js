@@ -81,12 +81,17 @@ export default function HairstyleDetails() {
                 {hairstyleAndStylist.singleStylist && (
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
-                    <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.instagram_link)}>
-                      <FaSquareInstagram className="stylistIGLinks" />
-                    </Button>
-                    <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.booking_site)}>
-                      <FaCalendar className="stylistCalendarLinks" />
-                    </Button>
+                    {hairstyleAndStylist.singleStylist.instagram_link ? (
+                      <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.instagram_link)}>
+                        <FaSquareInstagram className="stylistIGLinks" />
+                      </Button>
+                    ) : ''}
+                    {hairstyleAndStylist.singleStylist.booking_site ? (
+                      <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.booking_site)}>
+                        <FaCalendar className="stylistCalendarLinks" />
+                      </Button>
+                    ) : ''}
+
                   </div>
                 )}
               </div>
