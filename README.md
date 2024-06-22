@@ -1,6 +1,6 @@
 # StyleStac - The Hairstyle Inventory App[![Netlify Status](https://api.netlify.com/api/v1/badges/57011e48-78e6-41a5-ad8f-7eb0e3cad867/deploy-status)](https://app.netlify.com/sites/style-stac-hia/deploys)
 
-<img alt="StyleStac-LoginPage" src="/Signin-Page.png" className="signIn-image" />
+<img alt="StyleStac-LoginPage" src="public/Signin-Page.png" className="signIn-image" />
 
 [Click Here to Access App](https://style-stac-hia.netlify.app/)
 
