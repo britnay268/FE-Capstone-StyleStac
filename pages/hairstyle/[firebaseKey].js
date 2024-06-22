@@ -38,7 +38,7 @@ export default function HairstyleDetails() {
     // Shows data for selected comment you press the edit button on.
     // console.warn('Review edit requested for:', reviewObj);
     setSelectedReview(reviewObj);
-    setReviewEditClick(true);
+    setReviewEditClick(!reviewEditClick);
   };
 
   const handleReviewDelete = (reviewObj) => {
@@ -105,7 +105,7 @@ export default function HairstyleDetails() {
         {reviewClick && <ReviewForm onReviewSubmit={getAllReviewsByHairstyle} hideForm={() => setReviewClick(false)} />}
 
         <div className="d-flex flex-wrap justify-content-between">
-          {reviews.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>There are no Reviews</h1> : reviews.map((review) => (
+          {reviews.length === 0 ? <h1 style={{ color: 'white', textAlign: 'center', width: '100%' }}>There are no reviews</h1> : reviews.map((review) => (
             <ReviewCard key={review.firebaseKey} reviewObj={review} onUpdate={getAllReviewsByHairstyle} reviewEdit={handleReviewEdit} reviewDelete={handleReviewDelete} />
           ))}
         </div>
