@@ -28,12 +28,16 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
     }
   };
 
-  const toggleFavorite = () => {
-    // This shows the opposite of the current favorite state (hairstyleObj.favorite is true, the variable is false and vice versa)
-    const newFavoriteState = !hairstyleObj.favorite;
-    updateHairstyle({ ...hairstyleObj, favorite: newFavoriteState }).then(onUpdate);
-    // Update local state after successful update
-    setIsFavorite(newFavoriteState);
+  const toggleFavorite = async () => {
+    if (hairstyleObj.copy) {
+      await deleteHairstyle(hairstyleObj.firebaseKey).then(() => router.reload());
+    } else {
+      // This shows the opposite of the current favorite state (hairstyleObj.favorite is true, the variable is false and vice versa)
+      const newFavoriteState = !hairstyleObj.favorite;
+      await updateHairstyle({ ...hairstyleObj, favorite: newFavoriteState }).then(onUpdate);
+      // Update local state after successful update
+      setIsFavorite(newFavoriteState);
+    }
   };
 
   const toggleNotYourFavorite = async () => {
@@ -51,7 +55,7 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
     }).then(({ name }) => {
       const patchPayload = { firebaseKey: name };
       updateHairstyle(patchPayload).then(() => {
-        router.push('/myhairstyles');
+        router.push('/favoriteHairstyle');
       });
     });
   };
@@ -91,11 +95,19 @@ export default function HairstyleCard({ hairstyleObj, onUpdate }) {
 
 HairstyleCard.propTypes = {
   hairstyleObj: PropTypes.shape({
-    name: PropTypes.string,
-    image: PropTypes.string,
-    uid: PropTypes.string,
-    firebaseKey: PropTypes.string,
-    favorite: PropTypes.bool,
-  }).isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    uid: PropTypes.string.isRequired,
+    firebaseKey: PropTypes.string.isRequired,
+    favorite: PropTypes.bool.isRequired,
+    copy: PropTypes.bool,
+  }),
   onUpdate: PropTypes.func.isRequired,
+};
+
+const initialState = {
+  copy: '',
+};
+HairstyleCard.defaultProps = {
+  hairstyleObj: initialState,
 };

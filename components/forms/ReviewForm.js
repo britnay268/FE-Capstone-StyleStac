@@ -55,9 +55,7 @@ export default function ReviewForm({ reviewObj, onReviewSubmit, hideForm }) {
     e.preventDefault();
     if (reviewObj.firebaseKey) {
       const updatePayload = { ...formInput, dateCreated: new Date().toISOString().split('T')[0] };
-      updateReview(updatePayload).then(() => {
-        router.push(`/hairstyle/${firebaseKey}`);
-      });
+      updateReview(updatePayload);
       onReviewSubmit();
       hideForm();
     } else {

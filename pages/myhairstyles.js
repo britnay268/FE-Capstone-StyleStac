@@ -5,7 +5,7 @@ import HairstyleCard from '../components/HairstyleCard';
 import { useAuth } from '../utils/context/authContext';
 import SearchBar from '../components/SearchBar';
 
-export default function ShowAllHairstlyes() {
+export default function ShowMyHairstlyes() {
   const [hairstyles, setHairstyles] = useState();
   const [searchResults, setSearchResults] = useState([]);
 

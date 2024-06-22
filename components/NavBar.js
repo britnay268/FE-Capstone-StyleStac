@@ -20,7 +20,9 @@ export default function NavBar() {
   };
   return (
     <div className={!collapsed ? 'backgroundNone' : 'backgroundWhite'}>
-      <Button onClick={handleToggleSidebar} style={{ backgroundColor: 'rgba(66, 51, 26, 0.5)', border: 'none', color: '#B8A07F' }}>{!collapsed ? (<TiThMenuOutline onClick={handleToggleSidebar} />) : <span style={{ color: '#42331A' }}>⬅</span>}</Button>
+      <div style={{ marginLeft: '10px' }}>
+        <Button onClick={handleToggleSidebar} className="navBar-backBtn">{!collapsed ? (<TiThMenuOutline onClick={handleToggleSidebar} />) : <span style={{ color: '#42331A' }}>⬅</span>}</Button>
+      </div>
       <div className={collapsed ? 'sidebar' : 'closed'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div>
@@ -34,23 +36,23 @@ export default function NavBar() {
           </div>
           <div className={collapsed ? 'sidebar' : 'closed'}>
             <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Home</Nav.Link>
             </Link>
             <Link passHref href="/hairstyles">
-              <Nav.Link>All Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Public Hairstyles</Nav.Link>
             </Link>
             <Link passHref href="/myhairstyles">
-              <Nav.Link>My Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>My Hairstyles</Nav.Link>
             </Link>
             <Link passHref href="/hairstyle/new">
-              <Nav.Link>Create Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Create Hairstyle</Nav.Link>
             </Link>
             <Link passHref href="/favoriteHairstyle">
-              <Nav.Link>Favorite Hairstyles</Nav.Link>
+              <Nav.Link onClick={handleToggleSidebar}>Favorite Hairstyles</Nav.Link>
             </Link>
             <hr style={{ padding: '0px 8px' }} />
             <Nav.Link />
-            <Button variant="danger" onClick={handleChange}>Sign Out</Button>
+            <Button className="logoutBtn" variant="link" onClick={handleChange}>Logout</Button>
           </div>
         </div>
       </div>
