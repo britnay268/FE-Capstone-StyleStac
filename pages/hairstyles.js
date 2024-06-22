@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar';
 import HairstyleFilter from '../components/HairstyleFilter';
 import { getHairstylesbyOccasion, getHairstylesbyType } from '../api/HairstyleData';
 
-export default function ShowAllHairstlyes() {
+export default function ShowPublicHairstlyes() {
   const [hairstyles, setHairstyles] = useState();
   const [searchResults, setSearchResults] = useState([]);
 

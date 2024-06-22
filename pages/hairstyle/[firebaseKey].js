@@ -11,6 +11,7 @@ import { deleteReview, getReviewByHairstyle } from '../../api/ReviewData';
 import ReviewCard from '../../components/ReviewCard';
 import StylistForm from '../../components/forms/StylistForm';
 import { getSingleHairstyle, updateHairstyle } from '../../api/HairstyleData';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function HairstyleDetails() {
   const [hairstyleDetails, setHairstyleDetails] = useState([]);
@@ -22,6 +23,7 @@ export default function HairstyleDetails() {
   const [hairstyleAndStylist, setHairstyleAndStylist] = useState([]);
 
   const { firebaseKey } = router.query;
+  const { user } = useAuth();
 
   const getAllReviewsByHairstyle = async () => {
     await getReviewByHairstyle(firebaseKey).then(setReviews);
@@ -73,12 +75,12 @@ export default function HairstyleDetails() {
           <p style={{ marginTop: '10px' }}>Date Done: {hairstyleDetails.date_done}</p>
           <p>Duration of Hairstyle: {hairstyleDetails.durationOfHairstyle}</p>
 
-          {hairstyleDetails.stylist_id === '' ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} />
+          {(hairstyleDetails.stylist_id === '' && hairstyleDetails.uid === user.uid) ? <StylistForm onUpdate={hairstyleDetails.firebaseKey && updateTheHairstyle} />
             : (
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
+              <div>
                 {hairstyleAndStylist.singleStylist && (
-                  <div>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <p>Stylist: {hairstyleAndStylist.singleStylist?.name}</p>
                     <Button variant="link" className="stylistlinkbtn" onClick={() => window.open(hairstyleAndStylist.singleStylist.instagram_link)}>
                       <FaSquareInstagram className="stylistIGLinks" />
                     </Button>

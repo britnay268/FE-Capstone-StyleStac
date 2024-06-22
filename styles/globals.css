@@ -344,6 +344,7 @@ Label {
   padding: 0px;
   border: none;
   color: #42331A;
+  margin-bottom: 12px;
 }
 
 .stylistlinkbtn:hover {
@@ -351,4 +352,28 @@ Label {
   padding: 0px;
   border: none;
   color: #42331A;
+}
+
+.logoutBtn {
+  color: #B8A07F;
+  font-weight: bold;
+}
+
+.logoutBtn:hover {
+  color: #42331A;
+  font-weight: bold;
+}
+
+.navBar-backBtn {
+  background-color: transparent;
+  border: none;
+  color: #B8A07F;
+  padding: 0px;
+}
+
+.navBar-backBtn:hover {
+  background-color: transparent;
+  border: none;
+  color: #B8A07F;
+  padding: 0px;
 }

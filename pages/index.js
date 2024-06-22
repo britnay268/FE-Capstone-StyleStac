@@ -11,8 +11,9 @@ function Home() {
       style={{
         height: '90vh',
         padding: '30px',
-        // maxWidth: '400px',
-        margin: '0 auto',
+        margin: '40px auto',
+        backgroundColor: '#B8A07F',
+        borderRadius: '50px',
       }}
     >
       <h1>Welcome {user.displayName} to StyleStac! </h1>
