@@ -17,7 +17,7 @@ function Home() {
       }}
     >
       <h1>Welcome {user.displayName} to StyleStac! </h1>
-      <h5 style={{ color: 'whitesmoke' }}>To get the most out of the app, we recommend watching this quick video below for a walkthrough of the features.</h5>
+      {/* <h5 style={{ color: 'whitesmoke' }}>To get the most out of the app, we recommend watching this quick video below for a walkthrough of the features.</h5> */}
     </div>
   );
 }
