@@ -1,61 +1,33 @@
-# React/Next.js Template
+# StyleStac - The Hairstyle Inventory App[![Netlify Status](https://api.netlify.com/api/v1/badges/57011e48-78e6-41a5-ad8f-7eb0e3cad867/deploy-status)](https://app.netlify.com/sites/style-stac-hia/deploys)
 
-[See Live Demo of this Template](https://drt-next-js-template.netlify.app/)
+<img alt="StyleStac-LoginPage" src="/Signin-Page.png" className="signIn-image" />
 
-## Topics
-- [Get Started](#get-started)
-- [Starting the Project](#starting-the-project)
-- [Deploying on Netlify](#deploying-on-netlify)
+[Click Here to Access App](https://style-stac-hia.netlify.app/)
+
+## Overview
+Never forget your best hairstyles again! StyleStac is the Go-To Hairstyle Inventory app for women. 
+Store pictures, names, and details like how long it lasts, what type of hairstyle it is (protective styles, updos, etc.), and even the occasion you wore it for. StyleStac doesn't just help you keep track of your own styles, it also lets you share your amazing hairstyles and discover new hairstyle ideas from others!
 ___
-## Getting Started
-### Use Template
-#### 1. To get started, click the GREEN "Use this Template" button at the top of the repo
-<img width="915" alt="Screen Shot 2022-07-06 at 12 54 01 PM" src="https://user-images.githubusercontent.com/29741570/177612998-4aac9237-5a1e-4f13-8ae0-468587521564.png">
+## Features
+- User can create hairstyles with the ability to upload an image from device.
+- User can edit and delete hairstyle created.
+- User can view details of the hairstyles (Date Done, Duration of Hairstyle, Type, Occassion).
+- On details page, a user can write a review/comment on a specific hairstyle.
+- Creator of the review can only delete their review on details page.
+- Creator of the hairstyle can add a stylist to hairstyle on details page.
+- User can make a hairstyle private or public when editing hairstyle. Private hairstyles only show on My Hairstyle page and public hairstyles show on Public Hairstyles page.
+- User can favorite their own hairstyle and favorite public hairstyles.
+- User can view favorite hairstyles on my hairstyle and favorite hairstyle page.
+- On the Public Hairstyle and My Hairstyle page, a user can search for a hairstyle by name.
+- On the Public Hairstyle page, a user can filter the the hairstyles by type and occasion.
 
-#### 2. Make sure YOUR github account is selected in the dropdown and name your project
-<img width="763" alt="Screen Shot 2022-07-06 at 12 54 48 PM" src="https://user-images.githubusercontent.com/29741570/177613126-dd38f678-7553-4f27-8a4a-75680f14d71e.png">
+## Video Walkthrough
+TBA - To Be Added
 
-#### 3. Clone your new repo to your local machine
-#### 4. Go to the **NEXT** section
+## Relevant Links
+- [ERD](https://dbdiagram.io/d/FE-Capstone-663fa6239e85a46d5595612c)
+- [Wireframe](https://www.figma.com/design/jBg7Q3RMa7svf7baFWV2yz/FE-Capstone?node-id=0-1&t=Eg0nAFDEAxBqgggL-0)
+- [Presentation](https://docs.google.com/presentation/d/1YeHz6awy3dEwNPrkw44fhVNPEFHQz02fIeKWEfOCfuE/edit?usp=sharing)
 
-## Starting the Project
-1. Create a Firebase project and set up authentication. Use [these videos](https://vimeo.com/showcase/codetracker-firebase) as a refresher if needed.
-1. Create a `.env` file at the root of the project
-1. Copy/Paste the contents of the `.env.sample` file to your newly created `.env` file.
-1. Copy over all of your Firebase values into the `.env` file.
-1. Open the `package.json` file and change the `name` property to the name of your application, and `author` to  your name.
-1. From your command line, be in the root directory and run `npm install` OR `npm i` for short.
-1. Next, run `npm run prepare`. This command sets up husky to track eslint errors on commit that will make your deploy fail on Netlify.
-1. To start your application, run `npm run dev`. THIS IS THE COMMAND YOU WILL USE TO RUN YOUR DEVELOPMENT SERVER FROM NOW ON.
-1. Open [http://localhost:3000](http://localhost:3000) with your browser.
-
-### If you see this, you are set to go!
-<img width="450" alt="Screen Shot 2022-07-06 at 1 07 27 PM" src="https://user-images.githubusercontent.com/29741570/177615077-9b6a75bc-0260-4d29-bb88-bd95a3140687.png">
-
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-**NOTES:** 
-- If you see the following error, you did not follow all the setup steps correctly and failed to add your Firebase creds. Go back and do that NOW.
-
-<img width="1043" alt="Screen Shot 2022-07-06 at 11 18 45 AM" src="https://user-images.githubusercontent.com/29741570/177612501-c2628f18-4bbd-4de9-aae6-27ffba1172d6.png">
-
-### Deploying on Netlify
-Netlify will automatically detect your project and prepopulate the settings, but should something go wrong and it does not, here are the commands:
-
-- Build Command: `npm run build`
-- Publish directory: `.next`
-
-#### Additional Steps to Take on Netlify
-- Add Environmental Variables
-    - Any Enviromental variables you are using in your `.env` file should be added to Netlify. 
-        - Go to Site settings > Build & deploy > Environment > Environment variables and the keys and values there.
-
-- Update Firebase URL Settings
-    - In Firebase under Authentication select sign in methods, scroll to Authorized domains. Add your Netlify URL.
-        
-## Learn More about Next.js
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributors
+- [Britnay Gore](https://github.com/britnay268)
