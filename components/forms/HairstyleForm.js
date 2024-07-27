@@ -103,11 +103,11 @@ export default function HairstyleForm({ hairstyleObj }) {
   };
 
   return (
-    <Form className="form-background" onSubmit={handleSubmit}>
+    <Form className="text-center d-flex flex-column justify-content-center align-content-center form-background" onSubmit={handleSubmit}>
       <h1 className="mt-5 audio form-title">{hairstyleObj.firebaseKey ? 'Update' : 'Create'} Hairstyle</h1>
 
       {/* Hairstyle Name Input */}
-      <Form.Group className="mb-3" controlId="floatingInput1">
+      <Form.Group className="mb-3 align" controlId="floatingInput1">
         <Form.Label>Hairstyle Name</Form.Label>
         <Form.Control
           type="text"
@@ -120,7 +120,7 @@ export default function HairstyleForm({ hairstyleObj }) {
       </Form.Group>
 
       {/* Hairstyle Type Dropdown */}
-      <Form.Group className="mb-3" controlId="floatingInput1">
+      <Form.Group className="mb-3 align" controlId="floatingInput1">
         <Form.Label>Hairstyle Type</Form.Label>
         <Form.Select
           aria-label="Type"
@@ -145,7 +145,7 @@ export default function HairstyleForm({ hairstyleObj }) {
       </Form.Group>
 
       {/* Hairstyle Occasion Dropdown */}
-      <Form.Group className="mb-3" controlId="floatingInput1">
+      <Form.Group className="mb-3 align" controlId="floatingInput1">
         <Form.Label>Hairstyle Occasion</Form.Label>
         <Form.Select
           aria-label="Occasion"
@@ -170,7 +170,7 @@ export default function HairstyleForm({ hairstyleObj }) {
       </Form.Group>
 
       {/* Hairstyle Duration */}
-      <Form.Group className="mb-3" controlId="floatingInput1">
+      <Form.Group className="mb-3 align" controlId="floatingInput1">
         <Form.Label>Duration of Hairstyle</Form.Label>
         <Form.Control
           type="text"
@@ -183,13 +183,13 @@ export default function HairstyleForm({ hairstyleObj }) {
       </Form.Group>
 
       {/* Hairstyle Date Completed */}
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-3 align">
         <Form.Label>Date Done</Form.Label>
         <Form.Control type="date" id="date_done" name="date_done" value={formInput.date_done} min="1910-10-31" max="2025-1-30" onChange={handleChange} />
       </Form.Group>
 
       {/* Hairstyle Image Input */}
-      <Form.Group controlId="floatingInput1">
+      <Form.Group controlId="floatingInput1" className="align">
         <Form.Label>Hairstyle Image</Form.Label>
       </Form.Group>
 

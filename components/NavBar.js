@@ -21,7 +21,7 @@ export default function NavBar() {
   return (
     <div className={!collapsed ? 'backgroundNone' : 'backgroundWhite'}>
       <div style={{ marginLeft: '10px' }}>
-        <Button onClick={handleToggleSidebar} className="navBar-backBtn">{!collapsed ? (<TiThMenuOutline onClick={handleToggleSidebar} />) : <span style={{ color: '#42331A' }}>⬅</span>}</Button>
+        <Button variant="transparent" onClick={handleToggleSidebar} className="navBar-backBtn">{!collapsed ? (<TiThMenuOutline onClick={handleToggleSidebar} />) : <span style={{ color: '#42331A' }}>⬅</span>}</Button>
       </div>
       <div className={collapsed ? 'sidebar' : 'closed'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>

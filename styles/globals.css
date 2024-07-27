@@ -87,20 +87,10 @@ svg {
     height: 200px;
   }
 
-  .side-bar {
-    display: flex;
-    height: 100vh;
-    width: 150px;
-    background-color: whitesmoke;
-  
-    a:hover {
-      background-color: rgba(184, 160, 127, 0.5);
-    }
-  }
-
   .backgroundWhite {
     width: 30vw;
   }
+
 }
 
 
@@ -183,17 +173,29 @@ svg {
 }
 
 .form-background {
-  /* display: inline-block; */
   background-color: rgba(184, 160, 127, 0.75);
-  padding: 3em 5em;
-  margin: 4em 13em;
+  padding: 50px;
+  margin: 100px auto;
   border-radius: 2em;
+}
+
+@media screen and (min-width: 932px) {
+  .form-background {
+    background-color: rgba(184, 160, 127, 0.75);
+    padding: 3em 5em;
+    margin: 4rem 13rem;
+    border-radius: 2em;
+  }
 }
 
 Label {
   color: #42331A;
   font-weight: bolder;
   font-size: large;
+}
+
+.align {
+  text-align: left;
 }
 
 .form-title {
@@ -293,7 +295,6 @@ Label {
 
 .backgroundWhite {
   background-color: whitesmoke;
-  height: 150vh;
 }
 
 .type-filter {
