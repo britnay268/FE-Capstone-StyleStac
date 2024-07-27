@@ -22,7 +22,7 @@ ___
 - On the Public Hairstyle page, a user can filter the the hairstyles by type and occasion.
 
 ## Video Walkthrough
-TBA - To Be Added
+[Walkthrough](https://www.loom.com/share/7bab0ae418b648de8d9f7ebf9c1289fc?sid=514e1647-2b1e-455e-9e01-b05739969c1d)
 
 ## Relevant Links
 - [ERD](https://dbdiagram.io/d/FE-Capstone-663fa6239e85a46d5595612c)
