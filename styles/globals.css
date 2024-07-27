@@ -5,6 +5,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  height: 100%;
 }
 
 a {
@@ -89,6 +90,7 @@ svg {
 
   .backgroundWhite {
     width: 30vw;
+    min-height: 130vh;
   }
 
 }
@@ -185,6 +187,10 @@ svg {
     padding: 3em 5em;
     margin: 4rem 13rem;
     border-radius: 2em;
+  }
+
+  .backgroundWhite {
+    min-height: 100vh;
   }
 }
 
