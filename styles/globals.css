@@ -81,6 +81,36 @@ svg {
   margin: 0 auto;
 }
 
+@media screen and (max-width: 932px) {
+  .home-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .side-bar {
+    display: flex;
+    height: 100vh;
+    width: 150px;
+    background-color: whitesmoke;
+  
+    a:hover {
+      background-color: rgba(184, 160, 127, 0.5);
+    }
+  }
+
+  .backgroundWhite {
+    width: 30vw;
+  }
+}
+
+
+.nav-logo {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+
 .details {
   background-color: #B8A07F;
   border-radius: 0.5rem;
@@ -233,6 +263,12 @@ Label {
   }
 }
 
+.sidebar-logout {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
 .nav-link {
   height: fit-content;
   padding-top: 10px;
@@ -258,12 +294,6 @@ Label {
 .backgroundWhite {
   background-color: whitesmoke;
   height: 150vh;
-}
-
-.sidebar {
-  Button {
-    margin: 0 105px;
-  }
 }
 
 .type-filter {
