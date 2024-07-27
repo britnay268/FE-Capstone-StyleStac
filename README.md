@@ -1,8 +1,8 @@
-# StyleStac - The Hairstyle Inventory App[![Netlify Status](https://api.netlify.com/api/v1/badges/57011e48-78e6-41a5-ad8f-7eb0e3cad867/deploy-status)](https://app.netlify.com/sites/style-stac-hia/deploys)
+# StyleStac - The Hairstyle Inventory App[![Netlify Status](https://api.netlify.com/api/v1/badges/caefe2a3-3073-49e5-ad4f-ee176a511c67/deploy-status)](https://app.netlify.com/sites/stylestac/deploys)
 
 <img alt="StyleStac-LoginPage" src="public/Signin-Page.png" className="signIn-image" />
 
-[Click Here to Access App](https://style-stac-hia.netlify.app/)
+[Click Here to Access App](https://stylestac.netlify.app/)
 
 ## Overview
 Never forget your best hairstyles again! StyleStac is the Go-To Hairstyle Inventory app for women. 

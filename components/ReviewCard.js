@@ -10,7 +10,6 @@ export default function ReviewCard({ reviewObj, reviewDelete }) {
 
   const handleDelete = () => {
     reviewDelete(reviewObj);
-    // console.warn(reviewObj.firebaseKey);
   };
 
   return (
