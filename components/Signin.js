@@ -10,7 +10,7 @@ function Signin() {
       className="text-center d-flex flex-column justify-content-center align-content-center signIn-container"
     >
       <Header />
-      <h1 style={{ color: '#B8A07F', fontSize: '50px' }}>Welcome to StyleStac!</h1>
+      <h1 style={{ color: 'wheat', fontSize: '50px' }}>Welcome to StyleStac!</h1>
       <img alt="StyleStac-logo" src="/app-logo.png" className="signIn-image" />
       <Button type="button" size="lg" className="signIn-button" onClick={signIn}>
         Login

@@ -21,18 +21,20 @@ export default function NavBar() {
   return (
     <div className={!collapsed ? 'backgroundNone' : 'backgroundWhite'}>
       <div style={{ marginLeft: '10px' }}>
-        <Button onClick={handleToggleSidebar} className="navBar-backBtn">{!collapsed ? (<TiThMenuOutline onClick={handleToggleSidebar} />) : <span style={{ color: '#42331A' }}>⬅</span>}</Button>
+        <Button variant="transparent" onClick={handleToggleSidebar} className="navBar-backBtn">{!collapsed ? (<TiThMenuOutline onClick={handleToggleSidebar} />) : <span style={{ color: '#42331A' }}>⬅</span>}</Button>
       </div>
       <div className={collapsed ? 'sidebar' : 'closed'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div>
-            <img
-              src="/Navbar-image.png"
-              alt="StyleStac-logo"
-              style={{
-                width: '300px', height: '80px', margin: '10px auto', padding: '0px 10px',
-              }}
-            />
+            <picture>
+              <source media="(max-width: 932px)" srcSet="/nav-logo.png" />
+              <source media="(min-width: 932px)" srcSet="/Navbar-image.png" />
+              <img
+                src="/Navbar-image.png"
+                alt="StyleStac-logo"
+                className="nav-logo"
+              />
+            </picture>
           </div>
           <div className={collapsed ? 'sidebar' : 'closed'}>
             <Link passHref href="/">
@@ -52,7 +54,9 @@ export default function NavBar() {
             </Link>
             <hr style={{ padding: '0px 8px' }} />
             <Nav.Link />
-            <Button className="logoutBtn" variant="link" onClick={handleChange}>Logout</Button>
+            <div className="sidebar-logout">
+              <Button className="logoutBtn" variant="link" onClick={handleChange}>Logout</Button>
+            </div>
           </div>
         </div>
       </div>
