@@ -23,7 +23,7 @@ body {
   opacity: 1;
 }
 
-h1, Form {
+h1, h4, Form {
   color: white;
 }
 
@@ -53,6 +53,16 @@ svg {
   padding-right: 50px;
   color: #42331A;
 }
+.walkthroughBtn {
+  background-color: #42331A;
+  border: none;
+  border-radius: 20pc;
+  width: fit-content;
+  margin: 0 auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: #B8A07F;
+}
 
 .signIn-button:hover {
   background-color: #42331A;
@@ -63,6 +73,12 @@ svg {
 .signIn-image {
   color: wheat;
   margin-bottom: 20px;
+}
+
+.home-image {
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
 }
 
 .details {
